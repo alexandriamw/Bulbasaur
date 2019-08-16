@@ -9,14 +9,15 @@ function googleMaps() {
             return response.json();
         })
         .then(responseJson => {
-            //maps
+        //    return responseJson;
         })
 }
+googleMaps();
 
-const map;
+let map;
 function initMap() {
   map = new google.maps.Map(document.getElementById("map"), {
-    center: {lat: issLat, lng: issLng},
+    center: {lat: , lng: },
     zoom: 8
   });
 }
