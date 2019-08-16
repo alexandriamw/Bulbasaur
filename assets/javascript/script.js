@@ -3,7 +3,7 @@
 
 const googleMapsAPI = "https://maps.googleapis.com/maps/api/js?key=AIzaSyAvh-RJE3-FnbTJlwKg-npCYZl_Yo8P6RU&callback=initMap";
 
-function googleMapsAPI() {
+function googleMaps() {
     fetch(googleMapsAPI)
         .then(response => {
             return response.json();
