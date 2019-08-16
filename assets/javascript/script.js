@@ -9,33 +9,40 @@ function googleMaps() {
             return response.json();
         })
         .then(responseJson => {
-        
+
         })
 }
 
 
 let map;
+
 function initMap() {
-    getIssPosition(function (data){
+    getIssPosition(function (data) {
         map = new google.maps.Map(document.getElementById("map"), {
-            center: {lat: data.lat, lng: data.lon},
+            center: {
+                lat: data.lat,
+                lng: data.lon
+            },
             zoom: 5
-          });
-          console.log(data);
+        });
+        console.log(data);
     })
-    
+
 }
 
 
 //this function fetches the position data from the api
-function getIssPosition(callbackFunction){
+function getIssPosition(callbackFunction) {
     fetch(issPositionAPI)
         .then(response => {
             return response.json();
         })
         .then(responseJson => {
             //position data of iss here
-            callbackFunction({lat: parseInt(responseJson.iss_position.latitude), lon: parseInt(responseJson.iss_position.longitude)})
+            callbackFunction({
+                lat: parseInt(responseJson.iss_position.latitude),
+                lon: parseInt(responseJson.iss_position.longitude)
+            })
         })
 }
 
