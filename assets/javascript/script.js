@@ -1,6 +1,6 @@
+//global API URL's / api keys
+const issPositionAPI = "http://api.open-notify.org/iss-now.json";
 // this is our google maps api key and link
-
-
 const googleMapsAPI = "https://maps.googleapis.com/maps/api/js?key=AIzaSyAvh-RJE3-FnbTJlwKg-npCYZl_Yo8P6RU&callback=initMap";
 
 function googleMaps() {
@@ -20,8 +20,7 @@ function initMap() {
     zoom: 8
   });
 }
-//global API URL's / api keys
-const issPositionAPI = "http://api.open-notify.org/iss-now.json";
+
 
 
 //this function fetches the position data from the api
