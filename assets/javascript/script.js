@@ -25,12 +25,13 @@ const issPositionAPI = "http://api.open-notify.org/iss-now.json";
 
 
 //this function fetches the position data from the api
-function getIssPosition() {
+function getIssPosition(callbackFunction){
     fetch(issPositionAPI)
         .then(response => {
             return response.json();
         })
         .then(responseJson => {
             //position data of iss here
+            callbackFunction({lat: responseJson.iss_position.latitude, lon: responseJson.iss_position.longitude})
         })
 }
