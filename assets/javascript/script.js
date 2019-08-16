@@ -15,7 +15,7 @@ function googleMapsAPI() {
 
 const map;
 function initMap() {
-  map = new google.maps.Map(document.getElementById('map'), {
+  map = new google.maps.Map(document.getElementById("map"), {
     center: {lat: issLat, lng: issLng},
     zoom: 8
   });
