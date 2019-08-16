@@ -19,7 +19,7 @@ function initMap() {
     getIssPosition(function (data){
         map = new google.maps.Map(document.getElementById("map"), {
             center: {lat: data.lat, lng: data.lon},
-            zoom: 4
+            zoom: 5
           });
           console.log(data);
     })
