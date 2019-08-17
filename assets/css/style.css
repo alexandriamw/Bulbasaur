@@ -17,3 +17,7 @@ body {
   border-radius: 75%;
   position: absolute;
 }
+
+.app-name {
+  font-size: 30px;
+}
