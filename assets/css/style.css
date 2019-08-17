@@ -24,6 +24,13 @@ body {
   margin-top: 10px;
 }
 
+.hamburger {
+  background: #307F5A;
+  padding: 6px 5px 4px 5px;
+  border-radius: 5px;
+  box-shadow: 2px 2px 0 #266648;
+  cursor: pointer;
+}
 .hamburger span {
   background-color: #F5FBEF;
   width: 40px;
@@ -31,7 +38,6 @@ body {
   margin-bottom: 3px;
   display: block;
   border-radius: 5px;
-  cursor: pointer;
 }
 
 .mynavbar {
