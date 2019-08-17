@@ -1,0 +1,19 @@
+#map {
+  height: 100%;
+
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.theIss {
+  height: 25px;
+  width: 25px;
+  color: red;
+  border-radius: 75%;
+  position: absolute;
+}
