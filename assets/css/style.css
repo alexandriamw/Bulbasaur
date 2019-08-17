@@ -5,6 +5,7 @@
 
 html,
 body {
+  font-family: 'Varela Round', sans-serif;
   height: 100%;
   margin: 0;
   padding: 0;
@@ -20,4 +21,19 @@ body {
 
 .app-name {
   font-size: 30px;
+  margin-top: 10px;
+}
+
+.hamburger span {
+  background-color: #FF7354;
+  width: 40px;
+  height: 7px;
+  margin-bottom: 3px;
+  display: block;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.mynavbar {
+  justify-content: space-between;
 }
