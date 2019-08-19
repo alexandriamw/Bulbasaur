@@ -73,3 +73,9 @@ body {
 .myRow{
   height: 100%;
 }
+.ourLogo{
+  height: 55px;
+  width: 55;
+  margin: 0px;
+  border-radius: 10px;
+}
