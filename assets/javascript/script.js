@@ -1,5 +1,5 @@
 //global API URL's / api keys
-const issPositionAPI = "http://api.open-notify.org/iss-now.json";
+const issPositionAPI = "https://api.wheretheiss.at/v1/satellites/25544";
 // this is our google maps api key and link
 const googleMapsAPI = "https://maps.googleapis.com/maps/api/js?key=AIzaSyAvh-RJE3-FnbTJlwKg-npCYZl_Yo8P6RU&callback=initMap";
 
@@ -40,8 +40,8 @@ function getIssPosition(callbackFunction) {
         .then(responseJson => {
             //position data of iss here
             callbackFunction({
-                lat: parseInt(responseJson.iss_position.latitude),
-                lon: parseInt(responseJson.iss_position.longitude)
+                lat: responseJson.latitude,
+                lon: responseJson.longitude
             })
         })
 }
