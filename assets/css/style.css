@@ -1,6 +1,9 @@
 #map {
   height: 100%;
-
+  border: 3px solid #307F5A;
+}
+.theMain{
+  height: 100%;
 }
 
 html,
@@ -11,12 +14,14 @@ body {
   padding: 0;
 }
 
-.theIss {
+.theISS {
   height: 25px;
   width: 25px;
   color: red;
   border-radius: 75%;
   position: absolute;
+  top: 55%;
+  right: 50%;
 }
 
 .app-name {
@@ -31,6 +36,7 @@ body {
   box-shadow: 2px 2px 0 #266648;
   cursor: pointer;
 }
+
 .hamburger span {
   background-color: #F5FBEF;
   width: 40px;
@@ -45,4 +51,31 @@ body {
   background: #379167;
   color: #F5FBEF;
   border-bottom: 3px solid #307F5A;
+  margin-bottom: 3%;
+}
+
+.myFooter {
+  margin-top: 3%;
+  text-align: center;
+  background: #379167;
+  border-top: 3px solid #307F5A;
+}
+.leftCard{
+  height: 100%;
+  border: 3px solid #307F5A;
+  margin-right: 3%;
+}
+.rightCard{
+  height: 100%;
+  border: 3px solid #307F5A;
+  margin-left: 3%;
+}
+.myRow{
+  height: 100%;
+}
+.ourLogo{
+  height: 55px;
+  width: 55;
+  margin: 0px;
+  border-radius: 10px;
 }
