@@ -17,3 +17,7 @@ body {
   border-radius: 75%;
   position: absolute;
 }
+.myNav{
+  margin-bottom: 2%;
+  height: 125px;
+}
