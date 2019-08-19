@@ -23,7 +23,9 @@ function initMap() {
                 lat: data.lat,
                 lng: data.lon
             },
-            zoom: 5
+            zoom: 5,
+            mapTypeId: google.maps.MapTypeId.SATELLITE 
+            
         });
         console.log(data);
     })
