@@ -9,6 +9,7 @@
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Varela+Round&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="shortcut icon" href="assets/images/favicon.ico" type="image/x-icon">
     <title>Bulbasaur</title>
 </head>
 
@@ -16,12 +17,15 @@
     <nav class="navbar navbar-expand-lg navbar-light mynavbar">
         <div><img class="ourLogo" src="assets/images/logo.jpg" alt="Bulbasaur Logo"></div>
         <h1 class="app-name">Bulbasaur</h1>
-        <div class="hamburger">
-            <span></span><span></span><span></span>
+        <div id="menu">
+            <span id="row1"></span>
+            <span id="row2"></span>
+            <span id="row3"></span>
+            <span id="row4"></span>
         </div>
     </nav>
 
-    <div class="container-fliud theMain">
+    <div class="container-fluid theMain">
         <div class="row myRow">
             <div class="container leftCard col-2">
                 <ul>
@@ -41,9 +45,10 @@
             <div class="theMap col-7" id="map">
 
             </div>
-            <div class="theISS">
-                <h5>The ISS</h5>
+            <div id="theISS">
+                <div id="dot-pulse"></div>
             </div>
+
             <div class="container rightCard col-2">
                 <ul>
                     <li>Placeholder Info</li>
@@ -67,9 +72,8 @@
     </div>
 
     <!--script tag for anime.js-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.2.0/anime.js"
-        integrity="sha256-kRbW+SRRXPogeps8ZQcw2PooWEDPIjVQmN1ocWVQHRY=" crossorigin="anonymous">
-    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.2.0/anime.min.js"
+        integrity="sha256-BuxrUdr/4YoztQLxT6xmdO6hSQw2d6BtBUY1pteGds4=" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
     </script>

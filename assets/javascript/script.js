@@ -24,8 +24,8 @@ function initMap() {
                 lng: data.lon
             },
             zoom: 5,
-            mapTypeId: google.maps.MapTypeId.SATELLITE 
-            
+            mapTypeId: google.maps.MapTypeId.SATELLITE
+
         });
         console.log(data);
     })
@@ -38,8 +38,7 @@ let destinationA = 'Stockholm, Sweden';
 let destinationB = new google.maps.LatLng(50.087692, 14.421150);
 
 let service = new google.maps.DistanceMatrixService();
-service.getDistanceMatrix(
-  {
+service.getDistanceMatrix({
     origins: [origin1, origin2],
     destinations: [destinationA, destinationB],
     travelMode: 'DRIVING',
@@ -48,11 +47,11 @@ service.getDistanceMatrix(
     unitSystem: UnitSystem,
     avoidHighways: Boolean,
     avoidTolls: Boolean,
-  }, callback);
+}, callback);
 
 function callback(response, status) {
-  // See Parsing the Results for
-  // the basics of a callback function.
+    // See Parsing the Results for
+    // the basics of a callback function.
 }
 
 
@@ -70,6 +69,73 @@ function getIssPosition(callbackFunction) {
             })
         })
 }
+
+//menu animation with anime.js
+document.getElementById("menu").addEventListener("click", function (event) {
+    const menuElement = document.getElementById("menu");
+
+    if (menuElement.classList.contains("open")) {
+        anime({
+            targets: "div#menu",
+            rotate: {
+                value: 0,
+                duration: 1000,
+                easing: "easeInOutSine"
+            }
+        });
+
+        anime({
+            targets: "span#row2",
+            rotate: {
+                value: 0
+            }
+        });
+
+        anime({
+            targets: "span#row3",
+            rotate: {
+                value: 0
+            }
+        });
+
+        anime({
+            targets: "span#row1, span#row4",
+            opacity: 1
+        });
+
+        menuElement.classList.remove("open");
+    } else {
+        anime({
+            targets: "div#menu",
+            rotate: {
+                value: 360,
+                duration: 1000,
+                easing: "easeInOutSine"
+            }
+        });
+
+        anime({
+            targets: "span#row2",
+            rotate: {
+                value: -45
+            }
+        });
+
+        anime({
+            targets: "span#row3",
+            rotate: {
+                value: 45
+            }
+        });
+
+        anime({
+            targets: "span#row1, span#row4",
+            opacity: 0
+        });
+
+        menuElement.classList.add("open");
+    }
+});
 
 
 
