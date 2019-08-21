@@ -27,6 +27,13 @@ function initMap() {
             mapTypeId: google.maps.MapTypeId.SATELLITE
 
         });
+        issMarker = new google.maps.Marker({
+            position: new google.maps.LatLng(data.lat, data.lon),
+            map: map,
+            icon: "./assets/images/redDot.png",
+            title: "the ISS",
+            optimized: false
+        })
         console.log(data);
     })
 
