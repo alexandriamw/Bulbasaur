@@ -30,6 +30,18 @@ body {
   animation: pulse 5s infinite;
 }
 
+#map div[title="the ISS"] img{
+  display: none;
+}
+
+/* look in the map div for a div with a title of "the ISS" */
+#map div[title="the ISS"]{
+  border-radius: 50%;
+  background-color: #e82c29;
+  animation: pulse 5s infinite;
+}
+
+
 @keyframes pulse {
   0% {
     opacity: 0.5;
