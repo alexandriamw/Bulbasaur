@@ -34,27 +34,51 @@ function initMap() {
             title: "the ISS",
             optimized: false
         })
+        // if (issMarker.geolocation) {
+            setInterval(()=>{
+                // issMarker.geolocation.getCurrentPosition(function(position) {
+                    getIssPosition(function(data){
+                        let pos = {
+                            lat: data.lat,
+                            lng: data.lon
+                          };
+                    
+                          issMarker.setPosition(pos);
+                        //   issMarker.setContent('Location found.');
+                        //   issMarker.open(map);
+                          map.setCenter(pos);
+                        }, function() {
+                          handleLocationError(true, issMarker, map.getCenter());
+                     
+                    })
+                // });
+            },1000)
+            
+        //   } else {
+            // Browser doesn't support Geolocation
+            // handleLocationError(false, issMarker, map.getCenter());
+        //   }
         console.log(data);
     })
 
 }
 // this is our distance matrix that just got loaded in. it needs to be customized for our need, but this is the ase code for it.
-let origin1 = new google.maps.LatLng(55.930385, -3.118425);
-let origin2 = 'Greenwich, England';
-let destinationA = 'Stockholm, Sweden';
-let destinationB = new google.maps.LatLng(50.087692, 14.421150);
+// let origin1 = new google.maps.LatLng(55.930385, -3.118425);
+// let origin2 = 'Greenwich, England';
+// let destinationA = 'Stockholm, Sweden';
+// let destinationB = new google.maps.LatLng(50.087692, 14.421150);
 
-let service = new google.maps.DistanceMatrixService();
-service.getDistanceMatrix({
-    origins: [origin1, origin2],
-    destinations: [destinationA, destinationB],
-    travelMode: 'DRIVING',
-    transitOptions: TransitOptions,
-    drivingOptions: DrivingOptions,
-    unitSystem: UnitSystem,
-    avoidHighways: Boolean,
-    avoidTolls: Boolean,
-}, callback);
+// let service = new google.maps.DistanceMatrixService();
+// service.getDistanceMatrix({
+//     origins: [origin1, origin2],
+//     destinations: [destinationA, destinationB],
+//     travelMode: 'DRIVING',
+//     transitOptions: TransitOptions,
+//     drivingOptions: DrivingOptions,
+//     unitSystem: UnitSystem,
+//     avoidHighways: Boolean,
+//     avoidTolls: Boolean,
+// }, callback);
 
 function callback(response, status) {
     // See Parsing the Results for
@@ -63,6 +87,7 @@ function callback(response, status) {
 
 
 //this function fetches the position data from the api
+
 function getIssPosition(callbackFunction) {
     fetch(issPositionAPI)
         .then(response => {
@@ -78,8 +103,9 @@ function getIssPosition(callbackFunction) {
 }
 
 //menu animation with anime.js
-document.getElementById("menu").addEventListener("click", function (event) {
-    const menuElement = document.getElementById("menu");
+const menuElement = document.getElementById("menu");
+menuElement.addEventListener("click", function () {
+
 
     if (menuElement.classList.contains("open")) {
         anime({
@@ -143,22 +169,3 @@ document.getElementById("menu").addEventListener("click", function (event) {
         menuElement.classList.add("open");
     }
 });
-
-
-
-
-// <script async defer src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap"
-// type="text/javascript"></script>
-
-// $.ajax({
-//     url: Auto_Complete_Link, 
-//     type: "GET",   
-//     dataType: 'jsonp',
-//     cache: false,
-//     success: function(response){                          
-//         alert(response);                   
-//     }           
-// });  
-
-
-// AIzaSyAvh-RJE3-FnbTJlwKg-npCYZl_Yo8P6RU
