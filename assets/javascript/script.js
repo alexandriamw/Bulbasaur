@@ -34,51 +34,20 @@ function initMap() {
             title: "the ISS",
             optimized: false
         })
-        // if (issMarker.geolocation) {
-            setInterval(()=>{
-                // issMarker.geolocation.getCurrentPosition(function(position) {
-                    getIssPosition(function(data){
-                        let pos = {
-                            lat: data.lat,
-                            lng: data.lon
-                          };
-                    
-                          issMarker.setPosition(pos);
-                        //   issMarker.setContent('Location found.');
-                        //   issMarker.open(map);
-                          map.setCenter(pos);
-                        }, function() {
-                          handleLocationError(true, issMarker, map.getCenter());
-                     
-                    })
-                // });
-            },1000)
-            
-        //   } else {
-            // Browser doesn't support Geolocation
-            // handleLocationError(false, issMarker, map.getCenter());
-        //   }
+        setInterval(() => {
+            getIssPosition(function (data) {
+                let pos = {
+                    lat: data.lat,
+                    lng: data.lon
+                };
+                issMarker.setPosition(pos);
+            }, function () {
+                handleLocationError(true, issMarker, map.getCenter());
+            })
+        }, 10000)
         console.log(data);
     })
-
 }
-// this is our distance matrix that just got loaded in. it needs to be customized for our need, but this is the ase code for it.
-// let origin1 = new google.maps.LatLng(55.930385, -3.118425);
-// let origin2 = 'Greenwich, England';
-// let destinationA = 'Stockholm, Sweden';
-// let destinationB = new google.maps.LatLng(50.087692, 14.421150);
-
-// let service = new google.maps.DistanceMatrixService();
-// service.getDistanceMatrix({
-//     origins: [origin1, origin2],
-//     destinations: [destinationA, destinationB],
-//     travelMode: 'DRIVING',
-//     transitOptions: TransitOptions,
-//     drivingOptions: DrivingOptions,
-//     unitSystem: UnitSystem,
-//     avoidHighways: Boolean,
-//     avoidTolls: Boolean,
-// }, callback);
 
 function callback(response, status) {
     // See Parsing the Results for
@@ -169,3 +138,22 @@ menuElement.addEventListener("click", function () {
         menuElement.classList.add("open");
     }
 });
+
+
+function setLocalForage() {
+
+    localforage.getItem("issArray").then(function (results) {
+        const data = "";
+
+
+        let issData = results || [];
+        issData.push(data);
+
+        localforage.setItem("issArray", issData).then(function () {
+            updateLeft();
+
+        });
+
+    })
+}
+
