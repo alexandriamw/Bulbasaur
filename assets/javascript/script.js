@@ -25,6 +25,7 @@ function initMap() {
             },
             zoom: 5,
             mapTypeId: google.maps.MapTypeId.SATELLITE
+           
 
         });
         issMarker = new google.maps.Marker({
