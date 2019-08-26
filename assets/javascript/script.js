@@ -44,7 +44,7 @@ function initMap() {
             }, function () {
                 handleLocationError(true, issMarker, map.getCenter());
             })
-        }, 10000)
+        }, 1000)
         console.log(data);
     })
 }
