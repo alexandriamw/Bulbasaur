@@ -25,8 +25,6 @@ function initMap() {
             },
             zoom: 5,
             mapTypeId: google.maps.MapTypeId.SATELLITE
-           
-
         });
         issMarker = new google.maps.Marker({
             position: new google.maps.LatLng(data.lat, data.lon),
@@ -47,6 +45,19 @@ function initMap() {
             })
         }, 1000)
         console.log(data);
+        setInterval(() => {
+            localforage.getItem("issArray").then(function (results) {
+                let issData = results || [];
+                issData.push(data);
+                localforage.setItem("issArray", issData).then(function () {
+                    function updateLeft() {
+
+                    }
+                });
+
+            })
+        }, 30000)
+
     })
 }
 
@@ -139,22 +150,3 @@ menuElement.addEventListener("click", function () {
         menuElement.classList.add("open");
     }
 });
-
-
-function setLocalForage() {
-
-    localforage.getItem("issArray").then(function (results) {
-        const data = "";
-
-
-        let issData = results || [];
-        issData.push(data);
-
-        localforage.setItem("issArray", issData).then(function () {
-            updateLeft();
-
-        });
-
-    })
-}
-
