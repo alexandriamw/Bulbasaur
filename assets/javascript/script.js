@@ -47,6 +47,14 @@ function initMap() {
             })
         }, 1000)
         console.log(data);
+        //=====================================================
+        //creating the event for placing the marker
+        google.maps.event.addListener(map, 'click', function(e) {
+        console.log(data);
+        let issData = data;
+        setForageData(issData);    
+        //=====================================================
+        });
     })
 }
 
@@ -141,96 +149,18 @@ menuElement.addEventListener("click", function () {
 });
 
 
-function setLocalForage() {
-
-    localforage.getItem("issArray").then(function (results) {
-        const data = "";
-
-
-        let issData = results || [];
-        issData.push(data);
-
-        localforage.setItem("issArray", issData).then(function () {
-            updateLeft();
-
-        });
-
+function setForageData(issData){
+    localforage.getItem("issData")
+    .then(data =>{
+        if(data === null){
+            data = [issData];
+        } else {
+            data.unshift(issData)
+        }
+        if (data.length > 100) data.pop();
+        localforage.setItem("issData", data)
+        .then(newData => {
+            console.log(newData);
+        })
     })
 }
-
-<<<<<<< HEAD
-// AIzaSyAvh-RJE3-FnbTJlwKg-npCYZl_Yo8P6RU
-
-//========================================================
-// localforage TEST 1: BEGIN
-//========================================================
-//It at least takes care of automatically converting your data to/from JSON strings.
-//Also, data other than strings.
-//Test to download picture for your app and cache it for offline use. 
-//We can save binary data with localForage:
-
-//Download image photo with AJAX.
-let request = new XMLHttpRequest();
- 
-//Get photo.
-request.open('GET', "http://i.imgur.com/YzkSFCW.png", true);
-request.responseType = 'arraybuffer';
-console.log(request.responseType);
-
-//An Ajax http request has 5 states as your reference code:
-
-//0   UNSENT  open() has not been called yet.
-//1   OPENED  send() has been called.
-//2   HEADERS_RECEIVED    send() has been called, and headers and status are available.
-//3   LOADING Downloading; responseText holds partial data.
-//4   DONE    The operation is complete.
-
-// When the AJAX state changes, save the data locally.
-request.addEventListener('readystatechange', function() {
-    if (request.readyState === 4) { // readyState DONE
-        // We store the binary data as-is.
-        localforage.setItem('user_1_photo', request.response, function() {
-            // Photo has been saved, do whatever happens next!
-        });
-    }
-});
- 
-request.send()
-
-//Next time we can get the photo out of localForage with just three lines of code:
-
-localforage.getItem('user_1_photo', function(photo) {
-    // Create a data URI or something to put the photo in an img tag or similar.
-    console.log(photo);
-});
-
-// Save our users.
-let users = [ {id: 1, fullName: 'Matt'}, {id: 2, fullName: 'Bob'} ];
-localforage.setItem('users', users, function(result) {
-    console.log(result);
-});
-
-//To use promises instead of a callback:
-localforage.getItem('user_1_photo').then(function(photo) {
-    // Create a data URI or something to put the photo in an <img> tag or similar.
-    console.log("Did you get here?",photo);
-});
-
-//We can create multiple instances (Stores) of localForage that point to different stores using createInstance. 
-//All the configuration options used by config are supported.
-//let store = localforage.createInstance({
-//name: "primaryStorage"
-//});
-
-//let otherStore = localforage.createInstance({
-//name: "secondaryStorage"
-//});
-
-// Setting the key on one of these doesn't affect the other.
-//store.setItem("key", "value");
-//otherStore.setItem("key", "value2");
-//========================================================
-// localforage TEST 1: END
-//========================================================
-=======
->>>>>>> 5e90665d3d24724cfbe61da44f9888dad6a974d7
