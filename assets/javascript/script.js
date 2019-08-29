@@ -3,7 +3,7 @@ const issPositionAPI = "https://api.wheretheiss.at/v1/satellites/25544";
 // this is our google maps api key and link
 const googleMapsAPI = "https://maps.googleapis.com/maps/api/js?key=AIzaSyAvh-RJE3-FnbTJlwKg-npCYZl_Yo8P6RU&callback=initMap";
 // this is our weather API key
-// const weatherAPI = 0ce03d42e54802b6dbe51878757418ee
+
 
 // not sure what this does??? fetches map. cool.
 function googleMaps() {
@@ -23,6 +23,7 @@ let map;
 let lat_global = "";
 let lon_global = "";
 getLastPoints();
+
 
 
 // our main map function
@@ -48,7 +49,7 @@ function initMap() {
 
         //1 second loop that updates and moves the blinking iss marker across the map
         setInterval(() => {
-            
+
             getIssPosition(function (data) {
                     let pos = {
                         lat: data.lat,
@@ -61,7 +62,7 @@ function initMap() {
                 function () {
                     handleLocationError(true, issMarker, map.getCenter());
                 })
-               
+
         }, 1000)
         console.log(data);
     })
@@ -246,7 +247,7 @@ function distanceMath() {
     function toRad(Value) {
         return Value * Math.PI / 180;
     }
-    
+
 }
 
 //updates the distance matrix every second to display a dynamic html distance
@@ -254,3 +255,17 @@ setInterval(() => {
     distanceMath();
 }, 1000)
 
+
+//cant get this to work yet
+const weatherAPI = "https://api.openweathermap.org/data/2.5/weather?lat="+ lat_global +"&lon="+ lon_global +"&appid=0ce03d42e54802b6dbe51878757418ee";
+
+function getWeather (){
+    fetch(weatherAPI).then(response =>{
+        return response.json();
+    })
+    .then(responseJson => {
+        console.log(responseJson);
+        
+    })
+}
+getWeather();
