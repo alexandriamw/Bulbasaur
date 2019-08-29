@@ -16,6 +16,10 @@ function googleMaps() {
 
 let map;
 
+let lat_global = "";
+let lon_global = "";
+getLastPoints();
+
 function initMap() {
     getIssPosition(function (data) {
         map = new google.maps.Map(document.getElementById("map"), {
@@ -43,23 +47,37 @@ function initMap() {
             }, function () {
                 handleLocationError(true, issMarker, map.getCenter());
             })
+            // setLocation();
+            // setTime();
         }, 1000)
         console.log(data);
-        setInterval(() => {
-            localforage.getItem("issArray").then(function (results) {
-                let issData = results || [];
-                issData.push(data);
-                localforage.setItem("issArray", issData).then(function () {
-                    function updateLeft() {
-
-                    }
-                });
-
-            })
-        }, 30000)
 
     })
 }
+
+// function setLocation() {
+//     getIssPosition;
+//  )
+// }
+
+function setTime() {
+    let time = moment().format('MMMM Do YYYY, h:mm:ss a');
+    localforage.getItem("localTime").then(function (results) {
+        let issTime = results || [];
+        issTime.push(time);
+        localforage.setItem("localTime", issTime).then(function () {
+
+        });
+    })
+}
+setInterval(() => {
+    // setLocation();
+    setTime();
+}, 10000)
+
+
+
+
 
 function callback(response, status) {
     // See Parsing the Results for
@@ -80,8 +98,34 @@ function getIssPosition(callbackFunction) {
                 lat: responseJson.latitude,
                 lon: responseJson.longitude
             })
+            lat_global = responseJson.latitude;
+            lon_global = responseJson.longitude;
         })
 }
+setInterval(() => {
+    localforage.getItem("issArray").then(function (results) {
+        let issData = results || [];
+        issData.push({
+            lat: lat_global,
+            lon: lon_global
+        });
+        localforage.setItem("issArray", issData).then(function () {
+    
+        });
+    })
+},30000)
+
+function getLastPoints(){
+    localforage.getItem("issArray").then(function (results) {
+        console.log({
+            a: results[results.length-1],
+            b: results[results.length-2],
+            c: results[results.length-3]
+            })
+    })
+}
+
+
 
 //menu animation with anime.js
 const menuElement = document.getElementById("menu");
