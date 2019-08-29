@@ -219,7 +219,8 @@ menuElement.addEventListener("click", function () {
 
 
 
-setInterval(() => {
+function distanceMath() {
+    //placeholder coords are Minneapolis
     console.log(calcCrow(44.948628, -93.245329, lat_global, lon_global).toFixed(1));
 
     //This function takes in latitude and longitude of two location and returns the distance between them as the crow flies (in km)
@@ -234,6 +235,7 @@ setInterval(() => {
             Math.sin(dLon / 2) * Math.sin(dLon / 2) * Math.cos(lat1) * Math.cos(lat2);
         var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
         var d = R * c;
+        document.getElementById("issDistance").innerHTML = Math.floor(d) + " Kilometers";
         return d;
     }
 
@@ -241,4 +243,13 @@ setInterval(() => {
     function toRad(Value) {
         return Value * Math.PI / 180;
     }
-}, 1000)
+    
+}
+
+
+setInterval(() => {
+    distanceMath();
+}, 500)
+
+
+ 

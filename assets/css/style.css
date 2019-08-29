@@ -5,7 +5,19 @@
 .theMain{
   height: 100%;
 }
-
+#leftH2{
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-weight: bold;
+  font-size: 20px;
+  margin-top: 2%;
+}
+#issDistance{
+  text-align: center;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-weight: bold;
+  font-size: 20px;
+  margin-top: 2%;
+}
 html,
 body {
   font-family: 'Varela Round', sans-serif;
