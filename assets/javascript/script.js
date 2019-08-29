@@ -2,7 +2,8 @@
 const issPositionAPI = "https://api.wheretheiss.at/v1/satellites/25544";
 // this is our google maps api key and link
 const googleMapsAPI = "https://maps.googleapis.com/maps/api/js?key=AIzaSyAvh-RJE3-FnbTJlwKg-npCYZl_Yo8P6RU&callback=initMap";
-
+// this is our weather API key
+// const weatherAPI = 0ce03d42e54802b6dbe51878757418ee
 
 // not sure what this does??? fetches map. cool.
 function googleMaps() {
@@ -47,18 +48,20 @@ function initMap() {
 
         //1 second loop that updates and moves the blinking iss marker across the map
         setInterval(() => {
+            
             getIssPosition(function (data) {
                     let pos = {
                         lat: data.lat,
                         lng: data.lon
                     };
                     issMarker.setPosition(pos);
+                    document.getElementById("issLocationLat").innerHTML = data.lat;
+                    document.getElementById("issLocationLon").innerHTML = data.lon;
                 },
                 function () {
                     handleLocationError(true, issMarker, map.getCenter());
                 })
-            // setLocation();
-            // setTime();
+               
         }, 1000)
         console.log(data);
     })
@@ -221,7 +224,7 @@ menuElement.addEventListener("click", function () {
 
 function distanceMath() {
     //placeholder coords are Minneapolis
-    console.log(calcCrow(44.948628, -93.245329, lat_global, lon_global).toFixed(1));
+    (calcCrow(44.948628, -93.245329, lat_global, lon_global).toFixed(1));
 
     //This function takes in latitude and longitude of two location and returns the distance between them as the crow flies (in km)
     function calcCrow(lat1, lon1, lat2, lon2) {
@@ -246,10 +249,8 @@ function distanceMath() {
     
 }
 
-
+//updates the distance matrix every second to display a dynamic html distance
 setInterval(() => {
     distanceMath();
-}, 500)
+}, 1000)
 
-
- 
