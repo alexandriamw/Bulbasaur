@@ -255,11 +255,14 @@ setInterval(() => {
     distanceMath();
 }, 1000)
 
-
+// let new_lat = parseFloat(lat_global);
+// let new_lon = parseFloat(lon_global);
 //cant get this to work yet
-const weatherAPI = "https://api.openweathermap.org/data/2.5/weather?lat="+ lat_global +"&lon="+ lon_global +"&appid=0ce03d42e54802b6dbe51878757418ee";
+const weatherAPI = `https://api.openweathermap.org/data/2.5/weather?lat=45&lon=15&appid=0ce03d42e54802b6dbe51878757418ee`;
 
 function getWeather (){
+    console.log(weatherAPI);
+    console.log(lat_global, lon_global);
     fetch(weatherAPI).then(response =>{
         return response.json();
     })
@@ -268,4 +271,7 @@ function getWeather (){
         
     })
 }
+
 getWeather();
+
+
