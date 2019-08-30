@@ -22,6 +22,10 @@ let map;
 //global vars for setting forage loops
 let lat_global = "";
 let lon_global = "";
+
+let lat_WeatherGlobal = "";
+let lon_WeatherGlobal = "";
+
 getLastPoints();
 
 
@@ -113,9 +117,27 @@ function getIssPosition(callbackFunction) {
             })
             lat_global = responseJson.latitude;
             lon_global = responseJson.longitude;
+
+            // lat_WeatherGlobal = responseJson.latitude;
+            // lon_WeatherGlobal = responseJson.longitude;
         })
 }
+// let weatherAPI = "https://api.openweathermap.org/data/2.5/weather?lat="+lat_WeatherGlobal+"&lon="+lon_WeatherGlobal+"&units=imperial&appid=0ce03d42e54802b6dbe51878757418ee";
 
+
+
+// function getWeather (){
+//     console.log(weatherAPI);
+//     fetch(weatherAPI).then(response =>{
+//         return response.json();
+//     })
+//     .then(responseJson => {
+//         console.log(responseJson);
+
+//     })
+// }
+
+// getWeather();
 // the loop that pushes lat and lon to localForage
 setInterval(() => {
     localforage.getItem("issArray").then(function (results) {
@@ -129,6 +151,7 @@ setInterval(() => {
         });
     })
 }, 30000)
+
 
 //function that grabs the last few lat lon points from localForage
 function getLastPoints() {
@@ -222,11 +245,9 @@ menuElement.addEventListener("click", function () {
 // distance function
 
 
-
 function distanceMath() {
     //placeholder coords are Minneapolis
     (calcCrow(44.948628, -93.245329, lat_global, lon_global).toFixed(1));
-
     //This function takes in latitude and longitude of two location and returns the distance between them as the crow flies (in km)
     function calcCrow(lat1, lon1, lat2, lon2) {
         var R = 6371; // km
@@ -255,23 +276,22 @@ setInterval(() => {
     distanceMath();
 }, 1000)
 
-// let new_lat = parseFloat(lat_global);
-// let new_lon = parseFloat(lon_global);
-//cant get this to work yet
-const weatherAPI = `https://api.openweathermap.org/data/2.5/weather?lat=45&lon=15&appid=0ce03d42e54802b6dbe51878757418ee`;
+//making a function that loads dynamic data and input fields onto the right card for user input
 
-function getWeather (){
-    console.log(weatherAPI);
-    console.log(lat_global, lon_global);
-    fetch(weatherAPI).then(response =>{
-        return response.json();
-    })
-    .then(responseJson => {
-        console.log(responseJson);
-        
+// was lazy and just hid the fields until clicked
+function loadRight() {
+    document.getElementById("menu").addEventListener("click", () => {
+
+        let inputField = document.getElementsByClassName("testFields");
+        console.log(inputField)
+        for (let i = 0; i < inputField.length; i++) {
+            if (inputField[i].style.display === "none") {
+                inputField[i].style.display = "block";
+            } else {
+                inputField[i].style.display = "none";
+            }
+        }
+
     })
 }
-
-getWeather();
-
-
+loadRight();
