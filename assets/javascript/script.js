@@ -5,18 +5,6 @@ const googleMapsAPI = "https://maps.googleapis.com/maps/api/js?key=AIzaSyAvh-RJE
 // this is our weather API key
 
 
-// not sure what this does??? fetches map. cool.
-function googleMaps() {
-    fetch(googleMapsAPI)
-        .then(response => {
-            return response.json();
-        })
-        .then(responseJson => {
-
-        })
-}
-
-
 let map;
 
 //global vars for setting forage loops
@@ -73,37 +61,7 @@ function initMap() {
 }
 
 
-
-// funtion to grab local time and log it in localForage that matches a specific iss position
-function setTime() {
-    let time = moment().format('MMMM Do YYYY, h:mm:ss a');
-    localforage.getItem("localTime").then(function (results) {
-        let issTime = results || [];
-        issTime.push(time);
-        localforage.setItem("localTime", issTime).then(function () {
-
-        });
-    })
-}
-
-// sets time interval to log time
-setInterval(() => {
-    // setLocation();
-    setTime();
-}, 30000)
-
-
-
-
-//what does this do?????
-function callback(response, status) {
-    // See Parsing the Results for
-    // the basics of a callback function.
-}
-
-
 //this function fetches the position data from the api
-
 function getIssPosition(callbackFunction) {
     fetch(issPositionAPI)
         .then(response => {
@@ -138,13 +96,19 @@ function getIssPosition(callbackFunction) {
 // }
 
 // getWeather();
+
+
+
 // the loop that pushes lat and lon to localForage
 setInterval(() => {
+    //combined the localTime aray and issArray so we do not have to mess with 2 arrays to get the time 
+    let time = moment().format('MMMM Do YYYY, h:mm:ss a');
     localforage.getItem("issArray").then(function (results) {
         let issData = results || [];
         issData.push({
             lat: lat_global,
-            lon: lon_global
+            lon: lon_global,
+            time: time
         });
         localforage.setItem("issArray", issData).then(function () {
 
@@ -160,13 +124,6 @@ function getLastPoints() {
             coordsA: results[results.length - 1],
             coordsB: results[results.length - 2],
             coordsC: results[results.length - 3]
-        })
-    })
-    localforage.getItem("localTime").then(function (results) {
-        console.log({
-            timeA: results[results.length - 1],
-            timeB: results[results.length - 2],
-            timeC: results[results.length - 3]
         })
     })
 }
