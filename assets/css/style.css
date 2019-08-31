@@ -5,6 +5,28 @@
 .theMain{
   height: 100%;
 }
+#toggledField{
+  width: 250px;
+}
+#test1{
+  animation-delay: 250ms;
+}
+#test2{
+  animation-delay: 500ms;
+}
+#test3{
+  animation-delay: 750ms;
+}
+#test4{
+  animation-delay: 1000ms;
+}
+.testFields{
+  text-align: center;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  font-size: 20px;
+  margin-top: 2%;
+}
 .leftH2{
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
   font-weight: bolder;
