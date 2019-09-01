@@ -15,8 +15,10 @@
 </head>
 
 <body>
+    <canvas id="bgCanvas"></canvas>
     <nav class="navbar navbar-expand-lg navbar-light mynavbar">
-        <div><img class="ourLogo  animated fadeInLeftBig delay-1s"
+        <div>
+            <img class="ourLogo  animated fadeInLeftBig delay-1s"
                 src="https://media.giphy.com/media/NUmZvbUdkGlsk/giphy.gif" alt="Bulbasaur Logo"></div>
         <h1 id="theApp" class="app-name animated fadeInDownBig">Bulbasaur</h1>
         <div class="animated fadeInRightBig delay-1s" id="menu">
@@ -30,10 +32,10 @@
     <div class="container-fluid theMain">
         <div class="row myRow">
             <div class="container leftCard col-2 animated fadeInLeftBig delay-1s">
-                <h2  class="leftH2">Current Distance From ISS</h2>
+                <h2 class="leftH2">Current Distance From ISS</h2>
                 <hr>
                 <div class="animated" id="issDistance">
-          
+
                 </div>
                 <h2 class="leftH2">Current ISS Lat/Lon</h2>
                 <hr>
@@ -41,23 +43,31 @@
 
                 </div>
                 <div id="issLocationLon">
-                    
+
                 </div>
                 <h2 class="leftH2">Current ISS Weather</h2>
                 <hr>
                 <div id="currentIssWeatherTemp">
-                    
+
+                </div>
+                <div id="currentIssWeatherHum">
+
+                </div>
+                <div id="currentIssWeatherRain">
+
+                </div>
+                <div id="currentIssWeatherWind">
+
                 </div>
             </div>
             <div class="theMap col-7 animated fadeInUpBig" id="map">
 
             </div>
-            <!-- <div id="theISS">
-                <div id="dot-pulse"></div>
-            </div> -->
 
-            <div id="mainInput" class="container rightCard col-2 animated fadeInRightBig delay-1s" style="overflow: auto">
-                
+
+            <div id="mainInput" class="container rightCard col-2 animated fadeInRightBig delay-1s"
+                style="overflow: auto">
+
             </div>
         </div>
     </div>
@@ -69,7 +79,7 @@
     <!--script tag for anime.js-->
     <script src="https://cdn.jsdelivr.net/npm/animejs@3.1.0/lib/anime.min.js"
         integrity="sha256-98Q574VkbV+PkxXCKSgL6jVq9mrVbS7uCdA+vt0sLS8=" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
     </script>
@@ -88,5 +98,5 @@
     <script src="assets/javascript/script.js"></script>
 </body>
 
-</html>
 
+</html>

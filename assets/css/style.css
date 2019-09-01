@@ -1,57 +1,77 @@
 #map {
   height: 100%;
   border: 3px solid #307F5A;
+  box-shadow: 0 4px 8px 0 rgba(253, 252, 252, 0.952), 0 6px 20px 0 rgba(247, 239, 239, 0.2);
 }
-.theMain{
+
+.theMain {
   height: 100%;
 }
-#toggledField{
+
+#toggledField {
   width: 250px;
 }
-#test1{
+
+#test1 {
   animation-delay: 250ms;
 }
-#test2{
+
+#test2 {
   animation-delay: 500ms;
 }
-#test3{
+
+#test3 {
   animation-delay: 750ms;
 }
-#test4{
+
+#test4 {
   animation-delay: 1000ms;
 }
-.consoleData{
+
+.consoleData {
   background: gray;
 }
-.testFields{
+
+.testFields {
   text-align: center;
   font-family: Arial, Helvetica, sans-serif;
   font-weight: bold;
+  border: rgb(145, 142, 142) 1px solid;
   font-size: 20px;
   margin-top: 4%;
 }
-.leftH2{
+
+.testFields:hover {
+  background-color: #fc8987;
+  color: rgb(241, 243, 245);
+  transition-duration: 750ms;
+}
+
+.leftH2 {
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
   font-weight: bolder;
   font-size: 20px;
   margin-top: 2%;
   text-align: center;
 }
-#issLocationLat{
+
+#issLocationLat {
   text-align: center;
   font-family: Arial, Helvetica, sans-serif;
   font-weight: bold;
   font-size: 20px;
   margin-top: 2%;
 }
-#issLocationLon{
+
+#issLocationLon {
   text-align: center;
   font-family: Arial, Helvetica, sans-serif;
   font-weight: bold;
   font-size: 20px;
   margin-bottom: 50px;
 }
-#issDistance{
+
+#issDistance {
   text-align: center;
   font-family: Arial, Helvetica, sans-serif;
   font-weight: bold;
@@ -59,19 +79,48 @@
   margin-top: 2%;
   margin-bottom: 50px;
 }
-#currentIssWeatherTemp{
+
+#currentIssWeatherTemp {
   text-align: center;
   font-family: Arial, Helvetica, sans-serif;
   font-weight: bold;
   font-size: 20px;
   margin-top: 2%;
 }
+
+#currentIssWeatherWind {
+  text-align: center;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  font-size: 20px;
+  margin-bottom: 50px;
+}
+
+#currentIssWeatherHum {
+  text-align: center;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  font-size: 20px;
+  margin-top: 2%;
+}
+
+#currentIssWeatherRain {
+  text-align: center;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  font-size: 20px;
+  margin-top: 2%;
+}
+
 html,
 body {
   font-family: 'Varela Round', sans-serif;
   height: 100%;
   margin: 0;
   padding: 0;
+  background-color: #000;
+  color: #fff;
+  width: 100%;
 }
 
 #theISS {
@@ -90,15 +139,16 @@ body {
   animation: pulse 5s infinite;
 }
 
-#map div[title="the ISS"] img{
+#map div[title="the ISS"] img {
   display: none;
 }
 
 /* look in the map div for a div with a title of "the ISS" */
-#map div[title="the ISS"]{
+#map div[title="the ISS"] {
   border-radius: 50%;
   background-color: #e82c29;
   animation: pulse 5s infinite;
+  
 }
 
 
@@ -109,11 +159,13 @@ body {
     width: 14px;
     transition: opacity 0.5s linear;
   }
+
   50% {
     opacity: 0;
     transform: scale(5);
     transition: opacity 0.5s linear;
   }
+
   100% {
     opacity: 0;
     transition: opacity 0.5s ease;
@@ -123,13 +175,15 @@ body {
 .app-name {
   font-size: 30px;
   margin-top: 10px;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-weight: bolder;
 }
 
 #menu {
   background: #307F5A;
   padding: 6px 5px 4px 5px;
   border-radius: 5px;
-  box-shadow: 2px 2px 0 #266648;
+  box-shadow: 0 4px 8px 0 rgba(253, 252, 252, 0.952), 0 6px 20px 0 rgba(247, 239, 239, 0.2);
   cursor: pointer;
   width: 50px;
   height: 46px;
@@ -167,7 +221,7 @@ span {
   justify-content: space-between;
   background: #379167;
   color: #F5FBEF;
-  border-bottom: 3px solid #307F5A;
+  box-shadow: 0 4px 8px 0 rgba(253, 252, 252, 0.952), 0 6px 20px 0 rgba(247, 239, 239, 0.2);
   margin-bottom: 3%;
 }
 
@@ -177,22 +231,38 @@ span {
   background: #379167;
   border-top: 3px solid #307F5A;
 }
-.leftCard{
+
+.leftCard {
   height: 100%;
   border: 3px solid #307F5A;
   margin-right: 3%;
+  box-shadow: 0 4px 8px 0 rgba(253, 252, 252, 0.952), 0 6px 20px 0 rgba(247, 239, 239, 0.2);
 }
-.rightCard{
+
+.rightCard {
   height: 100%;
   border: 3px solid #307F5A;
   margin-left: 3%;
+  box-shadow: 0 4px 8px 0 rgba(253, 252, 252, 0.952), 0 6px 20px 0 rgba(247, 239, 239, 0.2);
 }
-.myRow{
+
+.myRow {
   height: 100%;
 }
-.ourLogo{
+
+.ourLogo {
   height: 55px;
   width: 55;
   margin: 0px;
   border-radius: 10px;
+  box-shadow: 0 4px 8px 0 rgba(253, 252, 252, 0.952), 0 6px 20px 0 rgba(247, 239, 239, 0.2);
+}
+
+
+canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 1000px;
+  width: 100%;
 }

@@ -151,26 +151,22 @@ menuElement.addEventListener("click", function () {
                 easing: "easeInOutSine"
             }
         });
-
         anime({
             targets: "span#row2",
             rotate: {
                 value: 0
             }
         });
-
         anime({
             targets: "span#row3",
             rotate: {
                 value: 0
             }
         });
-
         anime({
             targets: "span#row1, span#row4",
             opacity: 1
         });
-
         menuElement.classList.remove("open");
     } else {
         anime({
@@ -181,26 +177,22 @@ menuElement.addEventListener("click", function () {
                 easing: "easeInOutSine"
             }
         });
-
         anime({
             targets: "span#row2",
             rotate: {
                 value: -45
             }
         });
-
         anime({
             targets: "span#row3",
             rotate: {
                 value: 45
             }
         });
-
         anime({
             targets: "span#row1, span#row4",
             opacity: 0
         });
-
         menuElement.classList.add("open");
         loadRight();
         displayRightBarData();
@@ -250,10 +242,10 @@ function loadRight() {
     rightBar.innerHTML = "";
 
     //adds the animation delay in dynamically so as to not have to bind an id to this just for that 
-    let animateDelay = 1000;
+    let animateDelay = 1500;
 
     //loop thorught because i am lazy and did not want to copy and paste 4 times until we figure out what we are doing here
-    for (let i = 1; i < 5; i++) {
+    for (let i = 1; i < 15; i++) {
         //create a div with an h3 of test inside of it just to see if it
         const newTestDiv = createDivs();
         newTestDiv.innerHTML = `<h3>test</h3>`;
@@ -261,7 +253,7 @@ function loadRight() {
         rightBar.prepend(newTestDiv);
 
         //devreases the animation delay as we are prepending to the right side and we want the top of the menu to load first
-        animateDelay -= 250;
+        animateDelay -= 150;
     }
 
     //create an input field and add it to the top of the right bar 
@@ -285,8 +277,9 @@ function displayRightBarData() {
             createRightConsoleData();
         }, 30000);
         //wait 2 seconds after function called to display data because it looks cooler
-        setTimeout(createRightConsoleData, 2000)
-
+      
+        setTimeout(createRightConsoleData, 1000)
+        
         //set is running var to true so we can identify if the interval is running or not
         rightBarDataGlobal.isRunning = true;
     } else {
@@ -329,7 +322,7 @@ function createRightConsoleData() {
                 //if  then try to make some exist in a reverse for loop counting down from 10
                 for (let i = 10; i >= 0; i--) {
                     let existing = document.getElementById(`${issData[i].lon}`);
-                    console.log(existing);
+                    // console.log(existing);
                     if (existing === null && issData[i].lat !== undefined) {
                         //create a div for it add consoleData to the classList so to be identified
                         let newDiv = createDivs()
@@ -348,8 +341,9 @@ function createRightConsoleData() {
 }
 
 
-
+// our weather API
 function getWeather() {
+    // instead of trying to get the iss data from iss loop itself, I grabbed it from the latest local forage push
     localforage.getItem("issArray").then(function (results) {
         let forageLat = results[0].lat;
         let forageLon = results[0].lon;
@@ -359,14 +353,133 @@ function getWeather() {
                 return response.json();
             })
             .then(responseJson => {
-                console.log(responseJson);
+                // console.log(responseJson);
+                // grabs the respons and appends the html every 30 seconds with the weather data for that specific location
                 document.getElementById("currentIssWeatherTemp").innerHTML = responseJson.main.temp + " Degrees F";
+                document.getElementById("currentIssWeatherHum").innerHTML = "Humidity: " +responseJson.main.humidity;
+                document.getElementById("currentIssWeatherRain").innerHTML = responseJson.weather[0].description;
+                document.getElementById("currentIssWeatherWind").innerHTML = "Wind: "+responseJson.wind.speed + " MPH";
 
             })
     })
 
 }
+// calls the weather function to generate it and then sets the 30 second interval that matches the rest of the main intervals for this app
 getWeather();
 setInterval(() => {
     getWeather();
-}, 30000)
+}, 30000);
+
+(function () {
+    var requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame || function (callback) {
+            window.setTimeout(callback, 1000 / 60);
+        };
+    window.requestAnimationFrame = requestAnimationFrame;
+})();
+
+// Terrain stuff.
+var background = document.getElementById("bgCanvas"),
+    bgCtx = background.getContext("2d"),
+    width = window.innerWidth,
+    height = document.body.offsetHeight;
+
+(height < 400) ? height = 400 : height;
+
+background.width = width;
+background.height = height;
+
+
+// Second canvas used for the stars
+bgCtx.fillStyle = '#05004c';
+bgCtx.fillRect(0, 0, width, height);
+
+// stars
+function Star(options) {
+    this.size = Math.random() * 2;
+    this.speed = Math.random() * .05;
+    this.x = options.x;
+    this.y = options.y;
+}
+
+Star.prototype.reset = function () {
+    this.size = Math.random() * 2;
+    this.speed = Math.random() * .05;
+    this.x = width;
+    this.y = Math.random() * height;
+}
+
+Star.prototype.update = function () {
+    this.x -= this.speed;
+    if (this.x < 0) {
+        this.reset();
+    } else {
+        bgCtx.fillRect(this.x, this.y, this.size, this.size);
+    }
+}
+
+function ShootingStar() {
+    this.reset();
+}
+
+ShootingStar.prototype.reset = function () {
+    this.x = Math.random() * width;
+    this.y = 0;
+    this.len = (Math.random() * 80) + 10;
+    this.speed = (Math.random() * 10) + 6;
+    this.size = (Math.random() * 1) + 0.1;
+    // this is used so the shooting stars arent constant
+    this.waitTime = new Date().getTime() + (Math.random() * 3000) + 500;
+    this.active = false;
+}
+
+ShootingStar.prototype.update = function () {
+    if (this.active) {
+        this.x -= this.speed;
+        this.y += this.speed;
+        if (this.x < 0 || this.y >= height) {
+            this.reset();
+        } else {
+            bgCtx.lineWidth = this.size;
+            bgCtx.beginPath();
+            bgCtx.moveTo(this.x, this.y);
+            bgCtx.lineTo(this.x + this.len, this.y - this.len);
+            bgCtx.stroke();
+        }
+    } else {
+        if (this.waitTime < new Date().getTime()) {
+            this.active = true;
+        }
+    }
+}
+
+var entities = [];
+
+// init the stars
+for (var i = 0; i < height; i++) {
+    entities.push(new Star({
+        x: Math.random() * width,
+        y: Math.random() * height
+    }));
+}
+
+// Add 2 shooting stars that just cycle.
+entities.push(new ShootingStar());
+entities.push(new ShootingStar());
+
+
+//animate background
+function animate() {
+    bgCtx.fillStyle = '#110E19';
+    bgCtx.fillRect(0, 0, width, height);
+    bgCtx.fillStyle = '#ffffff';
+    bgCtx.strokeStyle = '#ffffff';
+
+    var entLen = entities.length;
+
+    while (entLen--) {
+        entities[entLen].update();
+    }
+    requestAnimationFrame(animate);
+}
+animate();
+
