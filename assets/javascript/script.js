@@ -242,10 +242,10 @@ function loadRight() {
     rightBar.innerHTML = "";
 
     //adds the animation delay in dynamically so as to not have to bind an id to this just for that 
-    let animateDelay = 1000;
+    let animateDelay = 1500;
 
     //loop thorught because i am lazy and did not want to copy and paste 4 times until we figure out what we are doing here
-    for (let i = 1; i < 5; i++) {
+    for (let i = 1; i < 15; i++) {
         //create a div with an h3 of test inside of it just to see if it
         const newTestDiv = createDivs();
         newTestDiv.innerHTML = `<h3>test</h3>`;
@@ -253,7 +253,7 @@ function loadRight() {
         rightBar.prepend(newTestDiv);
 
         //devreases the animation delay as we are prepending to the right side and we want the top of the menu to load first
-        animateDelay -= 250;
+        animateDelay -= 150;
     }
 
     //create an input field and add it to the top of the right bar 
@@ -277,8 +277,9 @@ function displayRightBarData() {
             createRightConsoleData();
         }, 30000);
         //wait 2 seconds after function called to display data because it looks cooler
-        setTimeout(createRightConsoleData, 2000)
-
+      
+        setTimeout(createRightConsoleData, 1000)
+        
         //set is running var to true so we can identify if the interval is running or not
         rightBarDataGlobal.isRunning = true;
     } else {
@@ -352,7 +353,7 @@ function getWeather() {
                 return response.json();
             })
             .then(responseJson => {
-                console.log(responseJson);
+                // console.log(responseJson);
                 // grabs the respons and appends the html every 30 seconds with the weather data for that specific location
                 document.getElementById("currentIssWeatherTemp").innerHTML = responseJson.main.temp + " Degrees F";
                 document.getElementById("currentIssWeatherHum").innerHTML = "Humidity: " +responseJson.main.humidity;
@@ -481,3 +482,4 @@ function animate() {
     requestAnimationFrame(animate);
 }
 animate();
+
