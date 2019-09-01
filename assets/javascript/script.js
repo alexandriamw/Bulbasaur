@@ -483,3 +483,11 @@ function animate() {
 }
 animate();
 
+function selectData() {
+    document.querySelectorAll("consoleData").forEach(item => {
+        item.addEventListener('click', () => {
+            console.log("clicked");
+        })
+    })
+}
+selectData();
