@@ -1,6 +1,7 @@
 #map {
   height: 100%;
   border: 3px solid #307F5A;
+  box-shadow: 0 4px 8px 0 rgba(253, 252, 252, 0.952), 0 6px 20px 0 rgba(247, 239, 239, 0.2);
 }
 
 .theMain {
@@ -147,6 +148,7 @@ body {
   border-radius: 50%;
   background-color: #e82c29;
   animation: pulse 5s infinite;
+  
 }
 
 
@@ -179,7 +181,7 @@ body {
   background: #307F5A;
   padding: 6px 5px 4px 5px;
   border-radius: 5px;
-  box-shadow: 2px 2px 0 #266648;
+  box-shadow: 0 4px 8px 0 rgba(253, 252, 252, 0.952), 0 6px 20px 0 rgba(247, 239, 239, 0.2);
   cursor: pointer;
   width: 50px;
   height: 46px;
@@ -217,7 +219,7 @@ span {
   justify-content: space-between;
   background: #379167;
   color: #F5FBEF;
-  border-bottom: 3px solid #307F5A;
+  box-shadow: 0 4px 8px 0 rgba(253, 252, 252, 0.952), 0 6px 20px 0 rgba(247, 239, 239, 0.2);
   margin-bottom: 3%;
 }
 
@@ -232,12 +234,14 @@ span {
   height: 100%;
   border: 3px solid #307F5A;
   margin-right: 3%;
+  box-shadow: 0 4px 8px 0 rgba(253, 252, 252, 0.952), 0 6px 20px 0 rgba(247, 239, 239, 0.2);
 }
 
 .rightCard {
   height: 100%;
   border: 3px solid #307F5A;
   margin-left: 3%;
+  box-shadow: 0 4px 8px 0 rgba(253, 252, 252, 0.952), 0 6px 20px 0 rgba(247, 239, 239, 0.2);
 }
 
 .myRow {
@@ -249,6 +253,7 @@ span {
   width: 55;
   margin: 0px;
   border-radius: 10px;
+  box-shadow: 0 4px 8px 0 rgba(253, 252, 252, 0.952), 0 6px 20px 0 rgba(247, 239, 239, 0.2);
 }
 
 
@@ -257,4 +262,5 @@ canvas {
   top: 0;
   left: 0;
   height: 1000px;
+  width: 100%;
 }
