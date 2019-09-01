@@ -18,7 +18,7 @@ let city_cords_global = {
     lon: -93.245329,
     city: "Minneapolis"
 }
-
+// global weather coords
 let lat_WeatherGlobal = "";
 let lon_WeatherGlobal = "";
 
@@ -95,24 +95,6 @@ function getIssPosition(callbackFunction) {
             // lon_WeatherGlobal = responseJson.longitude;
         })
 }
-// let weatherAPI = "https://api.openweathermap.org/data/2.5/weather?lat="+lat_WeatherGlobal+"&lon="+lon_WeatherGlobal+"&units=imperial&appid=0ce03d42e54802b6dbe51878757418ee";
-
-
-
-// function getWeather (){
-//     console.log(weatherAPI);
-//     fetch(weatherAPI).then(response =>{
-//         return response.json();
-//     })
-//     .then(responseJson => {
-//         console.log(responseJson);
-
-//     })
-// }
-
-// getWeather();
-
-
 
 // the loop that pushes lat and lon to localForage
 setInterval(() => {
@@ -120,7 +102,7 @@ setInterval(() => {
     let time = moment().format('MMMM Do YYYY, h:mm:ss a');
     localforage.getItem("issArray").then(function (results) {
         let issData = results || [];
-        issData.unshift({//changed from push to unshift so newest will always be at the top 
+        issData.unshift({ //changed from push to unshift so newest will always be at the top 
             lat: lat_global,
             lon: lon_global,
             time: time,
@@ -129,7 +111,7 @@ setInterval(() => {
         });
 
         // this keeps the data from being stored more that 100 items/ always keeps the newer data
-        if(issData.length > 100) issData.pop();
+        if (issData.length > 100) issData.pop();
         localforage.setItem("issArray", issData).then(function () {
 
         });
@@ -271,7 +253,7 @@ function loadRight() {
     let animateDelay = 1000;
 
     //loop thorught because i am lazy and did not want to copy and paste 4 times until we figure out what we are doing here
-    for (let i = 1; i<5; i++){
+    for (let i = 1; i < 5; i++) {
         //create a div with an h3 of test inside of it just to see if it
         const newTestDiv = createDivs();
         newTestDiv.innerHTML = `<h3>test</h3>`;
@@ -289,21 +271,21 @@ function loadRight() {
 }
 
 //this function exists to create div's for the right sidebar and add a preset class list
-function createDivs(){
+function createDivs() {
     const newDiv = document.createElement("div");
     newDiv.classList = "animated fadeInRightBig testFields";
-    return newDiv; 
+    return newDiv;
 }
 
 
 //intended to display sort of a console-esk log of previous coordinates every 30 seconds if the interval is running 
-function displayRightBarData(){
-    if(rightBarDataGlobal.isRunning === false){
-        rightBarDataGlobal.timerInterval = setInterval(()=>{
+function displayRightBarData() {
+    if (rightBarDataGlobal.isRunning === false) {
+        rightBarDataGlobal.timerInterval = setInterval(() => {
             createRightConsoleData();
-        },30000);
+        }, 30000);
         //wait 2 seconds after function called to display data because it looks cooler
-        setTimeout(createRightConsoleData,2000)
+        setTimeout(createRightConsoleData, 2000)
 
         //set is running var to true so we can identify if the interval is running or not
         rightBarDataGlobal.isRunning = true;
@@ -316,22 +298,22 @@ function displayRightBarData(){
 }
 
 //this creates the "Console like" elements in the right bar using the data stored in local forage
-function createRightConsoleData(){
+function createRightConsoleData() {
     //query local forage for the issArray array
     localforage.getItem("issArray").then(function (results) {
         let issData = results || [];
 
         //if the array is not empty do things
-        if (issData.length !== 0){
+        if (issData.length !== 0) {
 
             //check if previous data is displayed
             let previousConsoleData = document.getElementsByClassName("consoleData");
 
             //if not then try to make some exist in a reverse for loop counting down from 10
-            if(previousConsoleData.length === 0){
-                for(let i = 10; i>=0;i--){
+            if (previousConsoleData.length === 0) {
+                for (let i = 10; i >= 0; i--) {
                     //if issData with the index of i exists then put it on the page
-                    if (issData[i].lat !== undefined){
+                    if (issData[i].lat !== undefined) {
                         //create a div for it add consoleData to the classList so to be identified
                         let newDiv = createDivs()
                         newDiv.classList.add("consoleData");
@@ -343,12 +325,12 @@ function createRightConsoleData(){
                     }
                 }
             } else {
-                
+
                 //if  then try to make some exist in a reverse for loop counting down from 10
-                for(let i = 10; i>=0;i--){
+                for (let i = 10; i >= 0; i--) {
                     let existing = document.getElementById(`${issData[i].lon}`);
                     console.log(existing);
-                    if (existing === null && issData[i].lat !== undefined){
+                    if (existing === null && issData[i].lat !== undefined) {
                         //create a div for it add consoleData to the classList so to be identified
                         let newDiv = createDivs()
                         newDiv.classList.add("consoleData");
@@ -364,3 +346,27 @@ function createRightConsoleData(){
         }
     })
 }
+
+
+
+function getWeather() {
+    localforage.getItem("issArray").then(function (results) {
+        let forageLat = results[0].lat;
+        let forageLon = results[0].lon;
+        let weatherAPI = "https://api.openweathermap.org/data/2.5/weather?lat=" + forageLat + "&lon=" + forageLon + "&units=imperial&appid=0ce03d42e54802b6dbe51878757418ee";
+
+        fetch(weatherAPI).then(response => {
+                return response.json();
+            })
+            .then(responseJson => {
+                console.log(responseJson);
+                document.getElementById("currentIssWeatherTemp").innerHTML = responseJson.main.temp + " Degrees F";
+
+            })
+    })
+
+}
+getWeather();
+setInterval(() => {
+    getWeather();
+}, 30000)
