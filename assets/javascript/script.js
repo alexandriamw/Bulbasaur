@@ -306,7 +306,7 @@ function createRightConsoleData() {
             if (previousConsoleData.length === 0) {
                 for (let i = 10; i >= 0; i--) {
                     //if issData with the index of i exists then put it on the page
-                    if (issData[i].lat !== undefined) {
+                    if (issData[i] !== undefined) {
                         //create a div for it add consoleData to the classList so to be identified
                         let newDiv = createDivs()
                         newDiv.classList.add("consoleData");
@@ -323,7 +323,7 @@ function createRightConsoleData() {
                 for (let i = 10; i >= 0; i--) {
                     let existing = document.getElementById(`${issData[i].lon}`);
                     // console.log(existing);
-                    if (existing === null && issData[i].lat !== undefined) {
+                    if (existing === null && issData[i] !== undefined) {
                         //create a div for it add consoleData to the classList so to be identified
                         let newDiv = createDivs()
                         newDiv.classList.add("consoleData");
