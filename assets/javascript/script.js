@@ -97,7 +97,7 @@ function codeAddress() {
         if (status == 'OK') {
             let mapDotBlue = mapDot;
             mapDotBlue.fillColor = "blue";
-            if (customLocation === undefined){
+            if (customLocation === undefined) {
                 customLocation = new google.maps.Marker({
                     map: map,
                     icon: mapDotBlue,
@@ -110,7 +110,7 @@ function codeAddress() {
             city_cords_global.lat = customLocation.getPosition().lat();
             city_cords_global.lon = customLocation.getPosition().lng();
         } else {
-            alert('Geocode was not successful for the following reason: ' + status);
+            createDisplayModal('Geocode was not successful for the following reason: ' + status)
         }
     });
 }
@@ -162,7 +162,7 @@ setInterval(() => {
 //function that grabs the last few lat lon points from localForage
 function getLastPoints() {
     localforage.getItem("issArray").then(function (results) {
-        if(results === null) return;
+        if (results === null) return;
         console.log({
             coordsA: results[results.length - 1],
             coordsB: results[results.length - 2],
@@ -306,9 +306,9 @@ function loadRight() {
     const newButton = createDivs();
 
     newButton.innerHTML = `<button id="inputButton" type="submit" value="Click Me" name="submit">`
-    newButton.addEventListener("click", function(){
+    newButton.addEventListener("click", function () {
         const cityInput = document.getElementById("toggledField");
-        if (typeof cityInput.value === "string"){
+        if (typeof cityInput.value === "string") {
             city_cords_global.city = cityInput.value;
             codeAddress();
         } else {
@@ -352,7 +352,7 @@ function createRightConsoleData() {
     localforage.getItem("issArray").then(function (results) {
         let issData = results || [];
 
-        
+
 
         //if the array is not empty do things
         if (issData.length !== 0) {
@@ -361,7 +361,7 @@ function createRightConsoleData() {
 
             //check if previous data is displayed
             let previousConsoleData = document.getElementsByClassName("consoleData");
-           
+
 
             //if not then try to make some exist in a reverse for loop counting down from 10
             if (previousConsoleData.length === 0) {
@@ -395,7 +395,7 @@ function createRightConsoleData() {
 
                         //set the id of the new div to the longitude coordinate and set the innerHTML to the data
                         newDiv.id = `${issData[i].lon}`;
-                        
+
                         //this binds the entire object stringified to the div
                         newDiv.setAttribute("rawdata", JSON.stringify(issData[i]));
                         newDiv.innerHTML = `<p style="font-size: 14px">lat: ${issData[i].lat}<br/>lon: ${issData[i].lon}<br/>timeStamp: ${issData[i].time}<br/>distance from ${issData[i].cityData.city}: ${issData[i].distance}</p>`;
@@ -416,7 +416,7 @@ function createRightConsoleData() {
 function getWeather() {
     // instead of trying to get the iss data from iss loop itself, I grabbed it from the latest local forage push
     localforage.getItem("issArray").then(function (results) {
-        if(results === null) return;
+        if (results === null) return;
         let forageLat = results[0].lat;
         let forageLon = results[0].lon;
         let weatherAPI = "https://api.openweathermap.org/data/2.5/weather?lat=" + forageLat + "&lon=" + forageLon + "&units=imperial&appid=0ce03d42e54802b6dbe51878757418ee";
@@ -557,7 +557,7 @@ animate();
 
 // this function is going to grab the data from the right bar and let the user get previous data sets from the ISS
 function selectData() {
-    document.querySelectorAll(".consoleData").forEach(item => { 
+    document.querySelectorAll(".consoleData").forEach(item => {
         item.addEventListener('click', () => {
             let newData = item.getAttribute("rawData");
             let clickedData = JSON.parse(newData);
@@ -575,3 +575,14 @@ function selectData() {
 }
 selectData();
 
+function createDisplayModal(displayString) {
+    let modal = document.getElementById("myModal");
+    let modalText = document.getElementById("modal-text");
+    modal.style.display = "block";
+    window.addEventListener("click", function (event) {
+        if (event.target === modal) {
+            modal.style.display = "none"
+        }
+    })
+    modalText.textContent = displayString;
+}
