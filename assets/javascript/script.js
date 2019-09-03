@@ -32,6 +32,15 @@ let rightBarDataGlobal = {
 getLastPoints();
 displayRightBarData();
 
+let geocoder;
+
+//converted the map dot to an svg so we can change the color on the fly
+let mapDot = {
+    path: 'M25 125 c-14 -13 -25 -36 -25 -50 0 -33 42 -75 75 -75 33 0 75 42 75 75 0 14 -11 37 -25 50 -13 14 -36 25 -50 25 -14 0 -37 -11 -50 -25z',
+    fillColor: 'red',
+    fillOpacity: 1,
+    scale: 0.1
+};
 
 
 // our main map function
@@ -46,12 +55,14 @@ function initMap() {
             zoom: 5,
             mapTypeId: google.maps.MapTypeId.SATELLITE
         });
+        geocoder = new google.maps.Geocoder();
+        codeAddress();
 
         //adds marker that centers on iss
         issMarker = new google.maps.Marker({
             position: new google.maps.LatLng(data.lat, data.lon),
             map: map,
-            icon: "./assets/images/redDot.png",
+            icon: mapDot,
             title: "the ISS",
             optimized: false
         })
@@ -75,6 +86,33 @@ function initMap() {
         }, 1000)
         console.log(data);
     })
+}
+
+let customLocation;
+// WORK IN PROGRESS!!!!!! getting city cords
+function codeAddress() {
+    geocoder.geocode({
+        'address': city_cords_global.city
+    }, function (results, status) {
+        if (status == 'OK') {
+            let mapDotBlue = mapDot;
+            mapDotBlue.fillColor = "blue";
+            if (customLocation === undefined){
+                customLocation = new google.maps.Marker({
+                    map: map,
+                    icon: mapDotBlue,
+                    position: results[0].geometry.location,
+                    title: "Custom Location",
+                });
+            } else {
+                customLocation.setPosition(results[0].geometry.location);
+            }
+            city_cords_global.lat = customLocation.getPosition().lat();
+            city_cords_global.lon = customLocation.getPosition().lng();
+        } else {
+            alert('Geocode was not successful for the following reason: ' + status);
+        }
+    });
 }
 
 
@@ -261,11 +299,22 @@ function loadRight() {
 
     //create an input field and add it to the top of the right bar 
     const newInputDiv = createDivs();
-    newInputDiv.innerHTML = `<input id="toggledField" type="text" value="Words" name="inputValue">`;
+    newInputDiv.id = "textBoxField"
+    newInputDiv.innerHTML = `<input id="toggledField" type="text" value="${city_cords_global.city}" name="inputValue">`;
     rightBar.prepend(newInputDiv);
 
     const newButton = createDivs();
+
     newButton.innerHTML = `<button id="inputButton" type="submit" value="Click Me" name="submit">`
+    newButton.addEventListener("click", function(){
+        const cityInput = document.getElementById("toggledField");
+        if (typeof cityInput.value === "string"){
+            city_cords_global.city = cityInput.value;
+            codeAddress();
+        } else {
+            cityInput.value = "Value is not a string!";
+        }
+    })
     rightBar.prepend(newButton);
 
     const secondButton = createDivs();
@@ -533,9 +582,9 @@ function selectData() {
             dataMArker = new google.maps.Marker({
                 position: new google.maps.LatLng(clickedData.lat, clickedData.lon),
                 map: map,
-                icon: "./assets/images/redDot.png",
+                icon: mapDot,
                 title: clickedData.time,
-                optimized: false,
+                optimized: false
             })
         })
     })
