@@ -7,6 +7,7 @@ const googleMapsAPI = "https://maps.googleapis.com/maps/api/js?key=AIzaSyAvh-RJE
 
 let map;
 
+
 //global vars for setting forage loops
 let lat_global = "";
 let lon_global = "";
@@ -45,6 +46,7 @@ function initMap() {
             zoom: 5,
             mapTypeId: google.maps.MapTypeId.SATELLITE
         });
+
         //adds marker that centers on iss
         issMarker = new google.maps.Marker({
             position: new google.maps.LatLng(data.lat, data.lon),
@@ -281,9 +283,9 @@ function displayRightBarData() {
             createRightConsoleData();
         }, 30000);
         //wait 2 seconds after function called to display data because it looks cooler
-      
+
         setTimeout(createRightConsoleData, 1000)
-        
+
         //set is running var to true so we can identify if the interval is running or not
         rightBarDataGlobal.isRunning = true;
     } else {
@@ -300,11 +302,16 @@ function createRightConsoleData() {
     localforage.getItem("issArray").then(function (results) {
         let issData = results || [];
 
+        
+
         //if the array is not empty do things
         if (issData.length !== 0) {
 
+
+
             //check if previous data is displayed
             let previousConsoleData = document.getElementsByClassName("consoleData");
+           
 
             //if not then try to make some exist in a reverse for loop counting down from 10
             if (previousConsoleData.length === 0) {
@@ -336,6 +343,9 @@ function createRightConsoleData() {
                         newDiv.id = `${issData[i].lon}`
                         newDiv.innerHTML = `<p style="font-size: 14px">lat: ${issData[i].lat}<br/>lon: ${issData[i].lon}<br/>timeStamp: ${issData[i].time}<br/>distance from ${issData[i].cityData.city}: ${issData[i].distance}</p>`;
                         rightBar.prepend(newDiv);
+
+                        selectData();
+
                     }
                 }
 
@@ -360,9 +370,9 @@ function getWeather() {
                 // console.log(responseJson);
                 // grabs the respons and appends the html every 30 seconds with the weather data for that specific location
                 document.getElementById("currentIssWeatherTemp").innerHTML = responseJson.main.temp + " Degrees F";
-                document.getElementById("currentIssWeatherHum").innerHTML = "Humidity: " +responseJson.main.humidity;
+                document.getElementById("currentIssWeatherHum").innerHTML = "Humidity: " + responseJson.main.humidity;
                 document.getElementById("currentIssWeatherRain").innerHTML = responseJson.weather[0].description;
-                document.getElementById("currentIssWeatherWind").innerHTML = "Wind: "+responseJson.wind.speed + " MPH";
+                document.getElementById("currentIssWeatherWind").innerHTML = "Wind: " + responseJson.wind.speed + " MPH";
 
             })
     })
@@ -376,8 +386,8 @@ setInterval(() => {
 
 (function () {
     var requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame || function (callback) {
-            window.setTimeout(callback, 1000 / 60);
-        };
+        window.setTimeout(callback, 1000 / 60);
+    };
     window.requestAnimationFrame = requestAnimationFrame;
 })();
 
@@ -387,7 +397,7 @@ var background = document.getElementById("bgCanvas"),
     width = window.innerWidth,
     height = document.body.offsetHeight;
 
-(height < 400) ? height = 400 : height;
+(height < 400) ? height = 400: height;
 
 background.width = width;
 background.height = height;
@@ -487,8 +497,9 @@ function animate() {
 }
 animate();
 
+// this function is going to grab the data from the right bar and let the user get previous data sets from the ISS
 function selectData() {
-    document.querySelectorAll("consoleData").forEach(item => {
+    document.querySelectorAll(".consoleData").forEach(item => { 
         item.addEventListener('click', () => {
             console.log("clicked");
         })
