@@ -7,7 +7,7 @@ and tracks its relative distance from Minneapolis, Minnesota.
 
 This applications incorporates the following APIs or frameworks:
 
-- [animate.js](https://animejs.com/)
+- [anime.js](https://animejs.com/)
 - [localStorage](https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API/Local_storage)
 - [Bootstrap 4](https://getbootstrap.com/)
 - [jQuery]()
