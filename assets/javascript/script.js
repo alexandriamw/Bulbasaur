@@ -327,7 +327,7 @@ function createRightConsoleData() {
                         newDiv.id = `${issData[i].lon}`;
 
                         //this binds the entire object stringified to the div
-                        newDiv.setAttribute("rawdata", JSON.stringify(issData[i]));
+                        newDiv.setAttribute("rawData", JSON.stringify(issData[i]));
                         newDiv.innerHTML = `<p style="font-size: 14px">lat: ${issData[i].lat}<br/>lon: ${issData[i].lon}<br/>timeStamp: ${issData[i].time}<br/>distance from ${issData[i].cityData.city}: ${issData[i].distance}</p>`;
                         rightBar.prepend(newDiv);
                     }
@@ -510,8 +510,14 @@ animate();
 function selectData() {
     document.querySelectorAll(".consoleData").forEach(item => { 
         item.addEventListener('click', () => {
-            console.log("clicked");
+            let newData = item.getAttribute("rawData");
+            let clickedData = JSON.parse(newData);
+            console.log(clickedData);
         })
     })
 }
 selectData();
+
+
+
+// newDiv.setAttribute("rawdata", JSON.stringify(issData[i]));
