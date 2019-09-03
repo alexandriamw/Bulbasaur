@@ -2,7 +2,23 @@
 const issPositionAPI = "https://api.wheretheiss.at/v1/satellites/25544";
 // this is our google maps api key and link
 const googleMapsAPI = "https://maps.googleapis.com/maps/api/js?key=AIzaSyAvh-RJE3-FnbTJlwKg-npCYZl_Yo8P6RU&callback=initMap";
-// this is our weather API key
+
+const modal = document.getElementById("myModal");
+const span = document.getElementsByClassName("close")[0];
+
+window.onload = function(){
+    modal.style.display = "block";
+}
+span.onclick = function() {
+  modal.style.display = "none";
+}
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
+
+
 
 
 let map;
