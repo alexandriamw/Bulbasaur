@@ -31,6 +31,17 @@
 .consoleData {
   background: gray;
 }
+#inputButton{
+  background-color: #e82c29;
+  border: #F5FBEF;
+  width: 55px;
+  height: 55px;
+  color: #000;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  text-align: center;
+  border-radius: 100%;
+}
 
 .testFields {
   text-align: center;

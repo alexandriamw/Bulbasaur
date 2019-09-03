@@ -258,8 +258,12 @@ function loadRight() {
 
     //create an input field and add it to the top of the right bar 
     const newInputDiv = createDivs();
-    newInputDiv.innerHTML = `<input id="toggledField" type="text" value="" name="inputValue">`;
+    newInputDiv.innerHTML = `<input id="toggledField" type="text" value="Words" name="inputValue">`;
     rightBar.prepend(newInputDiv);
+
+    const newButton = createDivs();
+    newButton.innerHTML = `<button id="inputButton" type="submit" value="Click Me" name="submit">`
+    rightBar.prepend(newButton);
 }
 
 //this function exists to create div's for the right sidebar and add a preset class list
