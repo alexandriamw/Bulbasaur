@@ -513,11 +513,16 @@ function selectData() {
             let newData = item.getAttribute("rawData");
             let clickedData = JSON.parse(newData);
             console.log(clickedData);
+
+            dataMArker = new google.maps.Marker({
+                position: new google.maps.LatLng(clickedData.lat, clickedData.lon),
+                map: map,
+                icon: "./assets/images/redDot.png",
+                title: "Data Point",
+                optimized: false
+            })
         })
     })
 }
 selectData();
 
-
-
-// newDiv.setAttribute("rawdata", JSON.stringify(issData[i]));
