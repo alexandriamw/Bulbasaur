@@ -6,16 +6,16 @@ const googleMapsAPI = "https://maps.googleapis.com/maps/api/js?key=AIzaSyAvh-RJE
 const modal = document.getElementById("myModal");
 const span = document.getElementsByClassName("close")[0];
 
-window.onload = function(){
+window.onload = function () {
     modal.style.display = "block";
 }
-span.onclick = function() {
-  modal.style.display = "none";
-}
-window.onclick = function(event) {
-  if (event.target == modal) {
+span.onclick = function () {
     modal.style.display = "none";
-  }
+}
+window.onclick = function (event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
 }
 
 
@@ -359,15 +359,14 @@ function loadRight() {
     rightBar.prepend(newButton);
 
     const secondButton = createDivs();
-    secondButton.innerHTML = `<button id="allDataPoints" type="submit" value="All ISS Positions" name="submit">`
+    secondButton.innerHTML = `<button id="allDataPoints" type="submit" value="All ISS Positions" name="ALL DATA POINTS">`
     rightBar.prepend(secondButton)
     secondButton.addEventListener("click", () => {
-        
+
         if (shown === false) {
             last100();
             shown = true;
-        }
-        else{
+        } else {
             toggle();
             shown = false;
         }
@@ -618,7 +617,6 @@ function selectData() {
 
             let newData = item.getAttribute("rawData");
             let clickedData = JSON.parse(newData);
-            console.log(clickedData);
 
             dataMArker = new google.maps.Marker({
                 position: new google.maps.LatLng(clickedData.lat, clickedData.lon),
@@ -637,8 +635,8 @@ let wooooooo = [];
 function last100() {
     localforage.getItem("issArray").then(function (results) {
         for (let i = 0; i < results.length; i++) {
-            
-           let forageMarker = new google.maps.Marker({
+
+            let forageMarker = new google.maps.Marker({
                 position: new google.maps.LatLng(results[i].lat, results[i].lon),
                 map: map,
                 icon: "./assets/images/redDot.png",
@@ -649,10 +647,10 @@ function last100() {
         }
     })
 }
-function toggle(){
-    for(let i = 0; i < wooooooo.length; i++){
+
+function toggle() {
+    for (let i = 0; i < wooooooo.length; i++) {
         wooooooo[i].setMap(null);
-        console.log("clicked");
     }
 }
 
@@ -667,3 +665,4 @@ function createDisplayModal(displayString) {
     })
     modalText.textContent = displayString;
 }
+
