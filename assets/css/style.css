@@ -3,10 +3,6 @@
   border-radius: 10px;
   box-shadow: 0 4px 8px 0 rgba(253, 252, 252, 0.952), 0 6px 20px 0 rgba(247, 239, 239, 0.2);
 }
-#smallMap{
-  /* height: 100%; */
-  box-shadow: 0 4px 8px 0 rgba(253, 252, 252, 0.952), 0 6px 20px 0 rgba(247, 239, 239, 0.2);
-}
 .theMain {
   height: 100%;
 }
@@ -258,7 +254,7 @@ span {
   box-shadow: 0 4px 8px 0 rgba(253, 252, 252, 0.952), 0 6px 20px 0 rgba(247, 239, 239, 0.2);
 
   padding-top: 10px;
-  overflow: scroll;
+
 }
 
 .rightCard {
@@ -329,6 +325,8 @@ canvas {
   float: right;
   font-size: 28px;
   font-weight: bold;
+  width: 10px;
+  height: 10px;
 }
 
 .close:hover,

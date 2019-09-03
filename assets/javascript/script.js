@@ -113,7 +113,7 @@ function codeAddress() {
         if (status == 'OK') {
             let mapDotBlue = mapDot;
             mapDotBlue.fillColor = "blue";
-            if (customLocation === undefined){
+            if (customLocation === undefined) {
                 customLocation = new google.maps.Marker({
                     map: map,
                     icon: mapDotBlue,
@@ -126,7 +126,7 @@ function codeAddress() {
             city_cords_global.lat = customLocation.getPosition().lat();
             city_cords_global.lon = customLocation.getPosition().lng();
         } else {
-            alert('Geocode was not successful for the following reason: ' + status);
+            createDisplayModal('Geocode was not successful for the following reason: ' + status)
         }
     });
 }
@@ -322,9 +322,9 @@ function loadRight() {
     const newButton = createDivs();
 
     newButton.innerHTML = `<button id="inputButton" type="submit" value="Click Me" name="submit">`
-    newButton.addEventListener("click", function(){
+    newButton.addEventListener("click", function () {
         const cityInput = document.getElementById("toggledField");
-        if (typeof cityInput.value === "string"){
+        if (typeof cityInput.value === "string") {
             city_cords_global.city = cityInput.value;
             codeAddress();
         } else {
