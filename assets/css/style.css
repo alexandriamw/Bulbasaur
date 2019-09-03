@@ -1,6 +1,6 @@
 #map {
   height: 100%;
-  border: 3px solid #307F5A;
+  border-radius: 10px;
   box-shadow: 0 4px 8px 0 rgba(253, 252, 252, 0.952), 0 6px 20px 0 rgba(247, 239, 239, 0.2);
 }
 
@@ -29,16 +29,17 @@
 }
 
 .consoleData {
-  background: gray;
+  background: #3D3C3B;
 }
 
 .testFields {
   text-align: center;
-  font-family: Arial, Helvetica, sans-serif;
   font-weight: bold;
   border: rgb(145, 142, 142) 1px solid;
+  border-radius: 5px;
   font-size: 20px;
   margin-top: 4%;
+  padding-top: 10px;
 }
 
 .testFields:hover {
@@ -48,7 +49,6 @@
 }
 
 .leftH2 {
-  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
   font-weight: bolder;
   font-size: 20px;
   margin-top: 2%;
@@ -57,7 +57,6 @@
 
 #issLocationLat {
   text-align: center;
-  font-family: Arial, Helvetica, sans-serif;
   font-weight: bold;
   font-size: 20px;
   margin-top: 2%;
@@ -65,7 +64,6 @@
 
 #issLocationLon {
   text-align: center;
-  font-family: Arial, Helvetica, sans-serif;
   font-weight: bold;
   font-size: 20px;
   margin-bottom: 50px;
@@ -73,7 +71,6 @@
 
 #issDistance {
   text-align: center;
-  font-family: Arial, Helvetica, sans-serif;
   font-weight: bold;
   font-size: 20px;
   margin-top: 2%;
@@ -82,7 +79,6 @@
 
 #currentIssWeatherTemp {
   text-align: center;
-  font-family: Arial, Helvetica, sans-serif;
   font-weight: bold;
   font-size: 20px;
   margin-top: 2%;
@@ -90,7 +86,6 @@
 
 #currentIssWeatherWind {
   text-align: center;
-  font-family: Arial, Helvetica, sans-serif;
   font-weight: bold;
   font-size: 20px;
   margin-bottom: 50px;
@@ -98,7 +93,6 @@
 
 #currentIssWeatherHum {
   text-align: center;
-  font-family: Arial, Helvetica, sans-serif;
   font-weight: bold;
   font-size: 20px;
   margin-top: 2%;
@@ -106,7 +100,6 @@
 
 #currentIssWeatherRain {
   text-align: center;
-  font-family: Arial, Helvetica, sans-serif;
   font-weight: bold;
   font-size: 20px;
   margin-top: 2%;
@@ -175,15 +168,14 @@ body {
 .app-name {
   font-size: 30px;
   margin-top: 10px;
-  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
   font-weight: bolder;
 }
 
 #menu {
-  background: #307F5A;
+  background: #12224F;
   padding: 6px 5px 4px 5px;
   border-radius: 5px;
-  box-shadow: 0 4px 8px 0 rgba(253, 252, 252, 0.952), 0 6px 20px 0 rgba(247, 239, 239, 0.2);
+  box-shadow: 0 4px 8px 0 rgba(253, 252, 252, 0.25), 0 6px 20px 0 rgba(247, 239, 239, 0.2);
   cursor: pointer;
   width: 50px;
   height: 46px;
@@ -219,31 +211,34 @@ span {
 
 .mynavbar {
   justify-content: space-between;
-  background: #379167;
+  background: #1A306D;
   color: #F5FBEF;
-  box-shadow: 0 4px 8px 0 rgba(253, 252, 252, 0.952), 0 6px 20px 0 rgba(247, 239, 239, 0.2);
+  box-shadow: 0 4px 8px 0 rgba(253, 252, 252, 0.25), 0 6px 20px 0 rgba(247, 239, 239, 0.2);
   margin-bottom: 3%;
 }
 
 .myFooter {
   margin-top: 3%;
   text-align: center;
-  background: #379167;
-  border-top: 3px solid #307F5A;
+  background: #1A306D;
+  border-top: 3px solid #12224F;
 }
 
 .leftCard {
   height: 100%;
-  border: 3px solid #307F5A;
+  border-radius: 10px;
   margin-right: 3%;
   box-shadow: 0 4px 8px 0 rgba(253, 252, 252, 0.952), 0 6px 20px 0 rgba(247, 239, 239, 0.2);
+  background-color: #3D3C3B;
+  padding-top: 10px;
 }
 
 .rightCard {
   height: 100%;
-  border: 3px solid #307F5A;
+  border-radius: 10px;
   margin-left: 3%;
   box-shadow: 0 4px 8px 0 rgba(253, 252, 252, 0.952), 0 6px 20px 0 rgba(247, 239, 239, 0.2);
+  background-color: #3D3C3B;
 }
 
 .myRow {
@@ -255,7 +250,7 @@ span {
   width: 55;
   margin: 0px;
   border-radius: 10px;
-  box-shadow: 0 4px 8px 0 rgba(253, 252, 252, 0.952), 0 6px 20px 0 rgba(247, 239, 239, 0.2);
+  box-shadow: 0 4px 8px 0 rgba(253, 252, 252, 0.25), 0 6px 20px 0 rgba(247, 239, 239, 0.2);
 }
 
 
