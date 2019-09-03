@@ -155,7 +155,12 @@ body {
   border-radius: 50%;
   background-color: #e82c29;
   animation: pulse 5s infinite;
-  
+}
+
+#map div[title="Custom Location"]{
+  border-radius: 50%;
+  background-color: blue;
+  animation: pulse 5s infinite;
 }
 
 
@@ -275,4 +280,15 @@ canvas {
   left: 0;
   height: 1000px;
   width: 100%;
+}
+
+#toggledField{
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
+
+#textBoxField{
+  max-height: 1000px;
+  padding: 0px;
 }

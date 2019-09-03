@@ -56,7 +56,7 @@ function initMap() {
             mapTypeId: google.maps.MapTypeId.SATELLITE
         });
         geocoder = new google.maps.Geocoder();
-        // codeAddress();
+        codeAddress();
 
         //adds marker that centers on iss
         issMarker = new google.maps.Marker({
@@ -88,29 +88,32 @@ function initMap() {
     })
 }
 
-
+let customLocation;
 // WORK IN PROGRESS!!!!!! getting city cords
-// function codeAddress() {
-//     geocoder.geocode({
-//         'address': city_cords_global.city
-//     }, function (results, status) {
-//         if (status == 'OK') {
-//             let mapDotBlue = mapDot;
-//             mapDotBlue.fillColor = "blue";
-//             console.log(results[0].geometry.location);
-//             const marker = new google.maps.Marker({
-//                 map: map,
-//                 icon: mapDotBlue,
-//                 position: results[0].geometry.location
-//             });
-//             let lat = marker.getPosition().lat();
-//             let lng = marker.getPosition().lng();
-//             console.log(lat,lng);
-//         } else {
-//             alert('Geocode was not successful for the following reason: ' + status);
-//         }
-//     });
-// }
+function codeAddress() {
+    geocoder.geocode({
+        'address': city_cords_global.city
+    }, function (results, status) {
+        if (status == 'OK') {
+            let mapDotBlue = mapDot;
+            mapDotBlue.fillColor = "blue";
+            if (customLocation === undefined){
+                customLocation = new google.maps.Marker({
+                    map: map,
+                    icon: mapDotBlue,
+                    position: results[0].geometry.location,
+                    title: "Custom Location",
+                });
+            } else {
+                customLocation.setPosition(results[0].geometry.location);
+            }
+            city_cords_global.lat = customLocation.getPosition().lat();
+            city_cords_global.lon = customLocation.getPosition().lng();
+        } else {
+            alert('Geocode was not successful for the following reason: ' + status);
+        }
+    });
+}
 
 
 //this function fetches the position data from the api
@@ -296,11 +299,22 @@ function loadRight() {
 
     //create an input field and add it to the top of the right bar 
     const newInputDiv = createDivs();
-    newInputDiv.innerHTML = `<input id="toggledField" type="text" value="Words" name="inputValue">`;
+    newInputDiv.id = "textBoxField"
+    newInputDiv.innerHTML = `<input id="toggledField" type="text" value="${city_cords_global.city}" name="inputValue">`;
     rightBar.prepend(newInputDiv);
 
     const newButton = createDivs();
+
     newButton.innerHTML = `<button id="inputButton" type="submit" value="Click Me" name="submit">`
+    newButton.addEventListener("click", function(){
+        const cityInput = document.getElementById("toggledField");
+        if (typeof cityInput.value === "string"){
+            city_cords_global.city = cityInput.value;
+            codeAddress();
+        } else {
+            cityInput.value = "Value is not a string!";
+        }
+    })
     rightBar.prepend(newButton);
 }
 
