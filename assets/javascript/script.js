@@ -2,12 +2,28 @@
 const issPositionAPI = "https://api.wheretheiss.at/v1/satellites/25544";
 // this is our google maps api key and link
 const googleMapsAPI = "https://maps.googleapis.com/maps/api/js?key=AIzaSyAvh-RJE3-FnbTJlwKg-npCYZl_Yo8P6RU&callback=initMap";
-// this is our weather API key
+
+const modal = document.getElementById("myModal");
+const span = document.getElementsByClassName("close")[0];
+
+window.onload = function(){
+    modal.style.display = "block";
+}
+span.onclick = function() {
+  modal.style.display = "none";
+}
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
+
+
 
 
 let map;
 
-
+let shown = false;
 //global vars for setting forage loops
 let lat_global = "";
 let lon_global = "";
@@ -151,7 +167,7 @@ setInterval(() => {
         });
 
         // this keeps the data from being stored more that 100 items/ always keeps the newer data
-        if (issData.length > 100) issData.pop();
+        if (issData.length > 150) issData.pop();
         localforage.setItem("issArray", issData).then(function () {
 
         });
@@ -286,7 +302,7 @@ function loadRight() {
     let animateDelay = 1500;
 
     //loop thorught because i am lazy and did not want to copy and paste 4 times until we figure out what we are doing here
-    for (let i = 1; i < 15; i++) {
+    for (let i = 1; i < 5; i++) {
         //create a div with an h3 of test inside of it just to see if it
         const newTestDiv = createDivs();
         newTestDiv.innerHTML = `<h3>test</h3>`;
@@ -316,6 +332,21 @@ function loadRight() {
         }
     })
     rightBar.prepend(newButton);
+
+    const secondButton = createDivs();
+    secondButton.innerHTML = `<button id="allDataPoints" type="submit" value="All ISS Positions" name="submit">`
+    rightBar.prepend(secondButton)
+    secondButton.addEventListener("click", () => {
+        
+        if (shown === false) {
+            last100();
+            shown = true;
+        }
+        else{
+            toggle();
+            shown = false;
+        }
+    })
 }
 
 //this function exists to create div's for the right sidebar and add a preset class list
@@ -559,6 +590,7 @@ animate();
 function selectData() {
     document.querySelectorAll(".consoleData").forEach(item => {
         item.addEventListener('click', () => {
+
             let newData = item.getAttribute("rawData");
             let clickedData = JSON.parse(newData);
             console.log(clickedData);
@@ -567,7 +599,7 @@ function selectData() {
                 position: new google.maps.LatLng(clickedData.lat, clickedData.lon),
                 map: map,
                 icon: mapDot,
-                title: "Data Point",
+                title: clickedData.time,
                 optimized: false
             })
         })
@@ -575,14 +607,26 @@ function selectData() {
 }
 selectData();
 
-function createDisplayModal(displayString) {
-    let modal = document.getElementById("myModal");
-    let modalText = document.getElementById("modal-text");
-    modal.style.display = "block";
-    window.addEventListener("click", function (event) {
-        if (event.target === modal) {
-            modal.style.display = "none"
+let wooooooo = [];
+
+function last100() {
+    localforage.getItem("issArray").then(function (results) {
+        for (let i = 0; i < results.length; i++) {
+            
+           let forageMarker = new google.maps.Marker({
+                position: new google.maps.LatLng(results[i].lat, results[i].lon),
+                map: map,
+                icon: "./assets/images/redDot.png",
+                title: results[i].time,
+                optimized: false
+            })
+            wooooooo.push(forageMarker);
         }
     })
-    modalText.textContent = displayString;
+}
+function toggle(){
+    for(let i = 0; i < wooooooo.length; i++){
+        wooooooo[i].setMap(null);
+        console.log("clicked");
+    }
 }
