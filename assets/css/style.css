@@ -3,7 +3,10 @@
   border-radius: 10px;
   box-shadow: 0 4px 8px 0 rgba(253, 252, 252, 0.952), 0 6px 20px 0 rgba(247, 239, 239, 0.2);
 }
-
+#smallMap{
+  /* height: 100%; */
+  box-shadow: 0 4px 8px 0 rgba(253, 252, 252, 0.952), 0 6px 20px 0 rgba(247, 239, 239, 0.2);
+}
 .theMain {
   height: 100%;
 }
@@ -30,6 +33,17 @@
 
 .consoleData {
   background: #3D3C3B;
+}
+#inputButton{
+  background-color: #e82c29;
+  border: #F5FBEF;
+  width: 55px;
+  height: 55px;
+  color: #000;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  text-align: center;
+  border-radius: 100%;
 }
 
 .testFields {
@@ -229,7 +243,7 @@ span {
   border-radius: 10px;
   margin-right: 3%;
   box-shadow: 0 4px 8px 0 rgba(253, 252, 252, 0.952), 0 6px 20px 0 rgba(247, 239, 239, 0.2);
-  background-color: #3D3C3B;
+
   padding-top: 10px;
   overflow: scroll;
 }
@@ -239,7 +253,7 @@ span {
   border-radius: 10px;
   margin-left: 3%;
   box-shadow: 0 4px 8px 0 rgba(253, 252, 252, 0.952), 0 6px 20px 0 rgba(247, 239, 239, 0.2);
-  background-color: #3D3C3B;
+ 
 }
 
 .myRow {
