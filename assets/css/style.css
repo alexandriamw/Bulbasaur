@@ -35,8 +35,7 @@
   background: #3D3C3B;
 }
 #inputButton{
-  background-color: #e82c29;
-  border: #F5FBEF;
+  background-color: #1A306D;
   width: 55px;
   height: 55px;
   color: #000;
@@ -45,7 +44,16 @@
   text-align: center;
   border-radius: 100%;
 }
-
+#allDataPoints{
+  background-color: #e82c29;
+  width: 55px;
+  height: 55px;
+  color: #000;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  text-align: center;
+  border-radius: 100%;
+}
 .testFields {
   text-align: center;
   font-weight: bold;
@@ -57,7 +65,7 @@
 }
 
 .testFields:hover {
-  background-color: #fc8987;
+  background-color: rgb(94, 122, 199);
   color: rgb(241, 243, 245);
   transition-duration: 750ms;
 }
@@ -159,7 +167,7 @@ body {
 
 #map div[title="Custom Location"]{
   border-radius: 50%;
-  background-color: blue;
+  background-color: #1A306D;
   animation: pulse 5s infinite;
 }
 
@@ -303,7 +311,6 @@ canvas {
   overflow: auto; 
 
 }
-
 
 .modal-content {
   background-color:#1A306D;

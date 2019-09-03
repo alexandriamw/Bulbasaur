@@ -302,7 +302,7 @@ function loadRight() {
     let animateDelay = 1500;
 
     //loop thorught because i am lazy and did not want to copy and paste 4 times until we figure out what we are doing here
-    for (let i = 1; i < 15; i++) {
+    for (let i = 1; i < 5; i++) {
         //create a div with an h3 of test inside of it just to see if it
         const newTestDiv = createDivs();
         newTestDiv.innerHTML = `<h3>test</h3>`;
