@@ -7,7 +7,7 @@ const googleMapsAPI = "https://maps.googleapis.com/maps/api/js?key=AIzaSyAvh-RJE
 
 let map;
 
-
+let shown = false;
 //global vars for setting forage loops
 let lat_global = "";
 let lon_global = "";
@@ -113,7 +113,7 @@ setInterval(() => {
         });
 
         // this keeps the data from being stored more that 100 items/ always keeps the newer data
-        if (issData.length > 100) issData.pop();
+        if (issData.length > 150) issData.pop();
         localforage.setItem("issArray", issData).then(function () {
 
         });
@@ -124,7 +124,7 @@ setInterval(() => {
 //function that grabs the last few lat lon points from localForage
 function getLastPoints() {
     localforage.getItem("issArray").then(function (results) {
-        if(results === null) return;
+        if (results === null) return;
         console.log({
             coordsA: results[results.length - 1],
             coordsB: results[results.length - 2],
@@ -267,6 +267,21 @@ function loadRight() {
     const newButton = createDivs();
     newButton.innerHTML = `<button id="inputButton" type="submit" value="Click Me" name="submit">`
     rightBar.prepend(newButton);
+
+    const secondButton = createDivs();
+    secondButton.innerHTML = `<button id="allDataPoints" type="submit" value="All ISS Positions" name="submit">`
+    rightBar.prepend(secondButton)
+    secondButton.addEventListener("click", () => {
+        
+        if (shown === false) {
+            last100();
+            shown = true;
+        }
+        else{
+            toggle();
+            shown = false;
+        }
+    })
 }
 
 //this function exists to create div's for the right sidebar and add a preset class list
@@ -303,7 +318,7 @@ function createRightConsoleData() {
     localforage.getItem("issArray").then(function (results) {
         let issData = results || [];
 
-        
+
 
         //if the array is not empty do things
         if (issData.length !== 0) {
@@ -312,7 +327,7 @@ function createRightConsoleData() {
 
             //check if previous data is displayed
             let previousConsoleData = document.getElementsByClassName("consoleData");
-           
+
 
             //if not then try to make some exist in a reverse for loop counting down from 10
             if (previousConsoleData.length === 0) {
@@ -346,7 +361,7 @@ function createRightConsoleData() {
 
                         //set the id of the new div to the longitude coordinate and set the innerHTML to the data
                         newDiv.id = `${issData[i].lon}`;
-                        
+
                         //this binds the entire object stringified to the div
                         newDiv.setAttribute("rawdata", JSON.stringify(issData[i]));
                         newDiv.innerHTML = `<p style="font-size: 14px">lat: ${issData[i].lat}<br/>lon: ${issData[i].lon}<br/>timeStamp: ${issData[i].time}<br/>distance from ${issData[i].cityData.city}: ${issData[i].distance}</p>`;
@@ -367,7 +382,7 @@ function createRightConsoleData() {
 function getWeather() {
     // instead of trying to get the iss data from iss loop itself, I grabbed it from the latest local forage push
     localforage.getItem("issArray").then(function (results) {
-        if(results === null) return;
+        if (results === null) return;
         let forageLat = results[0].lat;
         let forageLon = results[0].lon;
         let weatherAPI = "https://api.openweathermap.org/data/2.5/weather?lat=" + forageLat + "&lon=" + forageLon + "&units=imperial&appid=0ce03d42e54802b6dbe51878757418ee";
@@ -508,8 +523,9 @@ animate();
 
 // this function is going to grab the data from the right bar and let the user get previous data sets from the ISS
 function selectData() {
-    document.querySelectorAll(".consoleData").forEach(item => { 
+    document.querySelectorAll(".consoleData").forEach(item => {
         item.addEventListener('click', () => {
+
             let newData = item.getAttribute("rawData");
             let clickedData = JSON.parse(newData);
             console.log(clickedData);
@@ -518,11 +534,34 @@ function selectData() {
                 position: new google.maps.LatLng(clickedData.lat, clickedData.lon),
                 map: map,
                 icon: "./assets/images/redDot.png",
-                title: "Data Point",
-                optimized: false
+                title: clickedData.time,
+                optimized: false,
             })
         })
     })
 }
 selectData();
 
+let wooooooo = [];
+
+function last100() {
+    localforage.getItem("issArray").then(function (results) {
+        for (let i = 0; i < results.length; i++) {
+            
+           let forageMarker = new google.maps.Marker({
+                position: new google.maps.LatLng(results[i].lat, results[i].lon),
+                map: map,
+                icon: "./assets/images/redDot.png",
+                title: results[i].time,
+                optimized: false
+            })
+            wooooooo.push(forageMarker);
+        }
+    })
+}
+function toggle(){
+    for(let i = 0; i < wooooooo.length; i++){
+        wooooooo[i].setMap(null);
+        console.log("clicked");
+    }
+}
