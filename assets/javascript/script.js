@@ -131,6 +131,31 @@ function codeAddress() {
     });
 }
 
+let flightPath;
+
+function createPolyLine() {
+    var flightPlanCoordinates = [{
+            lat: city_cords_global.lat,
+            lng: city_cords_global.lon
+        },
+        {
+            lat: lat_global,
+            lng: lon_global
+        }
+    ];
+    if (flightPath === undefined) {
+        flightPath = new google.maps.Polyline({
+            path: flightPlanCoordinates,
+            geodesic: true,
+            strokeColor: '#FF0000',
+            strokeOpacity: 1.0,
+            strokeWeight: 2
+        });
+    } else {
+        flightPath.path = flightPlanCoordinates
+    }
+}
+
 
 //this function fetches the position data from the api
 function getIssPosition(callbackFunction) {
@@ -629,4 +654,16 @@ function toggle(){
         wooooooo[i].setMap(null);
         console.log("clicked");
     }
+}
+
+function createDisplayModal(displayString) {
+    let modal = document.getElementById("myErrModal");
+    let modalText = document.getElementById("modal-text");
+    modal.style.display = "block";
+    window.addEventListener("click", function (event) {
+        if (event.target === modal) {
+            modal.style.display = "none"
+        }
+    })
+    modalText.textContent = displayString;
 }

@@ -335,3 +335,41 @@ canvas {
   text-decoration: none;
   cursor: pointer;
 }
+.modal-custom {
+  display: none;
+  position: fixed; 
+  z-index: 1; 
+  left: 0;
+  top: 0;
+  width: 100%; 
+  height: 100%;
+  overflow: auto; 
+
+}
+
+.modal-content-custom {
+  background-color: #000;
+  color: white;
+  margin: 15% auto; /* 15% from the top and centered */
+  padding: 20px;
+  text-align: center;
+  border: 1px solid #888;
+  width: 80%; /* Could be more or less, depending on screen size */
+}
+
+ .modal-footer-custom{
+  padding: 2px 16px;
+  color: white;
+  font-size: 12px;
+  text-align: center;
+  width: 30%;
+  margin: auto;
+}
+
+
+ .modal-footer-custom h3{
+  padding: 2px 16px;
+  color: white;
+  font-size: 12px;
+  text-align: center;
+}
