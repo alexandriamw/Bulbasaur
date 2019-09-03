@@ -124,6 +124,7 @@ setInterval(() => {
 //function that grabs the last few lat lon points from localForage
 function getLastPoints() {
     localforage.getItem("issArray").then(function (results) {
+        if(results === null) return;
         console.log({
             coordsA: results[results.length - 1],
             coordsB: results[results.length - 2],
@@ -323,7 +324,10 @@ function createRightConsoleData() {
                         newDiv.classList.add("consoleData");
 
                         //set the id of the new div to the longitude coordinate and set the innerHTML to the data
-                        newDiv.id = `${issData[i].lon}`
+                        newDiv.id = `${issData[i].lon}`;
+
+                        //this binds the entire object stringified to the div
+                        newDiv.setAttribute("rawdata", JSON.stringify(issData[i]));
                         newDiv.innerHTML = `<p style="font-size: 14px">lat: ${issData[i].lat}<br/>lon: ${issData[i].lon}<br/>timeStamp: ${issData[i].time}<br/>distance from ${issData[i].cityData.city}: ${issData[i].distance}</p>`;
                         rightBar.prepend(newDiv);
                     }
@@ -332,7 +336,8 @@ function createRightConsoleData() {
 
                 //if  then try to make some exist in a reverse for loop counting down from 10
                 for (let i = 10; i >= 0; i--) {
-                    let existing = document.getElementById(`${issData[i].lon}`);
+                    let existing;
+                    if (issData[i] !== undefined) existing = document.getElementById(`${issData[i].lon}`);
                     // console.log(existing);
                     if (existing === null && issData[i] !== undefined) {
                         //create a div for it add consoleData to the classList so to be identified
@@ -340,7 +345,10 @@ function createRightConsoleData() {
                         newDiv.classList.add("consoleData");
 
                         //set the id of the new div to the longitude coordinate and set the innerHTML to the data
-                        newDiv.id = `${issData[i].lon}`
+                        newDiv.id = `${issData[i].lon}`;
+                        
+                        //this binds the entire object stringified to the div
+                        newDiv.setAttribute("rawdata", JSON.stringify(issData[i]));
                         newDiv.innerHTML = `<p style="font-size: 14px">lat: ${issData[i].lat}<br/>lon: ${issData[i].lon}<br/>timeStamp: ${issData[i].time}<br/>distance from ${issData[i].cityData.city}: ${issData[i].distance}</p>`;
                         rightBar.prepend(newDiv);
 
@@ -359,6 +367,7 @@ function createRightConsoleData() {
 function getWeather() {
     // instead of trying to get the iss data from iss loop itself, I grabbed it from the latest local forage push
     localforage.getItem("issArray").then(function (results) {
+        if(results === null) return;
         let forageLat = results[0].lat;
         let forageLon = results[0].lon;
         let weatherAPI = "https://api.openweathermap.org/data/2.5/weather?lat=" + forageLat + "&lon=" + forageLon + "&units=imperial&appid=0ce03d42e54802b6dbe51878757418ee";
