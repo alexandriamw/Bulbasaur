@@ -5,7 +5,7 @@ const googleMapsAPI = "https://maps.googleapis.com/maps/api/js?key=AIzaSyAvh-RJE
 
 const modal = document.getElementById("myModal");
 const span = document.getElementsByClassName("close")[0];
-
+// main onLoad function that greets the user
 window.onload = function () {
     modal.style.display = "block";
 }
@@ -44,7 +44,7 @@ let rightBarDataGlobal = {
     timerInterval: null,
     isRunning: false
 }
-
+// global calls ot render on load
 getLastPoints();
 displayRightBarData();
 
@@ -132,7 +132,7 @@ function codeAddress() {
 }
 
 let flightPath;
-
+// creates a polyline between two points. gg Coop
 function createPolyLine() {
     var flightPlanCoordinates = [{
             lat: city_cords_global.lat,
@@ -295,7 +295,7 @@ function distanceMath() {
         var dLon = toRad(lon2 - lon1);
         var lat1 = toRad(lat1);
         var lat2 = toRad(lat2);
-
+        
         var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
             Math.sin(dLon / 2) * Math.sin(dLon / 2) * Math.cos(lat1) * Math.cos(lat2);
         var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
@@ -345,7 +345,7 @@ function loadRight() {
     rightBar.prepend(newInputDiv);
 
     const newButton = createDivs();
-
+    // button that is used as input for new city data point
     newButton.innerHTML = `<button id="inputButton" type="submit" value="Click Me" name="submit">`
     newButton.addEventListener("click", function () {
         const cityInput = document.getElementById("toggledField");
@@ -357,7 +357,7 @@ function loadRight() {
         }
     })
     rightBar.prepend(newButton);
-
+    // creates button that allows to toggle the display all funtion of data points
     const secondButton = createDivs();
     secondButton.innerHTML = `<button id="allDataPoints" type="submit" value="All ISS Positions" name="ALL DATA POINTS">`
     rightBar.prepend(secondButton)
@@ -610,6 +610,7 @@ function animate() {
 }
 animate();
 
+let moreWooo = [];
 // this function is going to grab the data from the right bar and let the user get previous data sets from the ISS
 function selectData() {
     document.querySelectorAll(".consoleData").forEach(item => {
@@ -625,13 +626,15 @@ function selectData() {
                 title: clickedData.time,
                 optimized: false
             })
+            moreWooo.push(dataMArker);
         })
     })
 }
 selectData();
-
+// I know this is a shitty way to do this but im tired and this worked the first time
 let wooooooo = [];
 
+// pulls from localForage all the saved data points and maps them accros the map with time stamp. 
 function last100() {
     localforage.getItem("issArray").then(function (results) {
         for (let i = 0; i < results.length; i++) {
@@ -647,13 +650,19 @@ function last100() {
         }
     })
 }
-
+// toggle funtion that removes the dots when called
 function toggle() {
     for (let i = 0; i < wooooooo.length; i++) {
         wooooooo[i].setMap(null);
     }
 }
-
+//not very dry but hey it works and we're pushing lots of code
+function smallToggle(){
+    for(let i = 0; i < moreWooo.length; i++){
+        moreWooo[i].setMap(null);
+    }
+}
+// creates a popup if an error is thrown at us with user input
 function createDisplayModal(displayString) {
     let modal = document.getElementById("myErrModal");
     let modalText = document.getElementById("modal-text");
