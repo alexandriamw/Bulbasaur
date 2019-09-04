@@ -348,26 +348,24 @@ function loadRight() {
 
     //adds the animation delay in dynamically so as to not have to bind an id to this just for that 
     let animateDelay = 1200;
-    
+
+    const newKillDiv = createDivs();
+    newKillDiv.style = `animation-delay: ${animateDelay}ms`;
+    newKillDiv.innerHTML = `<button id="inputButton" type="submit" value="Click Me" name="submit">Delete Random Marker's</button>`;
+    newKillDiv.addEventListener("click", function () {
+        killRandom();
+    })
+    animateDelay -= 150;
+    rightBar.prepend(newKillDiv);
 
     const newMarkerDiv = createDivs();
     newMarkerDiv.style = `animation-delay: ${animateDelay}ms`;
     newMarkerDiv.innerHTML = `<button id="inputButton" type="submit" value="Click Me" name="submit">Create Random Marker</button>`;
     newMarkerDiv.addEventListener("click", function () {
-        randomPosition()
+        randomPosition();
     })
     animateDelay -= 150;
     rightBar.prepend(newMarkerDiv);
-
-    const newKillDiv = createDivs();
-    newKillDiv.style = `animation-delay: ${animateDelay}ms`;
-    newKillDiv.innerHTML = `<button id="inputButton" type="submit" value="Click Me" name="submit">delete Random Marker's</button>`;
-    newKillDiv.addEventListener("click", function () {
-        killRandom()
-    })
-    animateDelay -= 150;
-    rightBar.prepend(newKillDiv);
-
 
     const newPolyColorDiv = createDivs();
     newPolyColorDiv.style = `animation-delay: ${animateDelay}ms`;
@@ -846,8 +844,9 @@ function reColorPolyline(){
 let randomPositionGen =[];
 
  function randomPosition(){
+    let randomColor = "#000000".replace(/0/g,function(){return (~~(Math.random()*16)).toString(16);});
     let mapDotRed = mapDot;
-    mapDotRed.fillColor = "red";
+    mapDotRed.fillColor = randomColor;
 
      let numLon = (Math.random()*180).toFixed(3);
     let pOrNeg = Math.floor(Math.random());
