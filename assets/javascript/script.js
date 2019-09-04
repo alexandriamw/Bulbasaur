@@ -45,17 +45,13 @@ let rightBarDataGlobal = {
     isRunning: false
 }
 
+//this controls the polyline if true then show polyline if not then don't show it
+let isEnabled = true;
+
 getLastPoints();
 displayRightBarData();
 
 let geocoder;
-
-let mapDot1 = {
-    path: 'M25 125 c-14 -13 -25 -36 -25 -50 0 -33 42 -75 75 -75 33 0 75 42 75 75 0 14 -11 37 -25 50 -13 14 -36 25 -50 25 -14 0 -37 -11 -50 -25z',
-    fillColor: 'red',
-    fillOpacity: 1,
-    scale: 0.1
-};
 
 //converted the map dot to an svg so we can change the color on the fly
 let mapDot;
@@ -115,7 +111,7 @@ function initMap() {
 }
 
 let customLocation;
-// WORK IN PROGRESS!!!!!! getting city cords
+
 function codeAddress() {
     geocoder.geocode({
         'address': city_cords_global.city
@@ -136,7 +132,7 @@ function codeAddress() {
             city_cords_global.lat = customLocation.getPosition().lat();
             city_cords_global.lon = customLocation.getPosition().lng();
         } else {
-            createDisplayModal('Geocode was not successful for the following reason: ' + status)
+            createDisplayModal('Location Could not Be found: ' + status)
         }
     });
 }
@@ -153,6 +149,12 @@ function createPolyLine() {
             lng: lon_global
         }
     ];
+    if (isEnabled === false) {
+        if (flightPath === undefined) return
+        flightPath.setMap(null);
+        flightPath = undefined;
+        return
+    }
     if (flightPath === undefined) {
         flightPath = new google.maps.Polyline({
             path: flightPlanCoordinates,
@@ -343,25 +345,45 @@ function loadRight() {
     rightBar.innerHTML = "";
 
     //adds the animation delay in dynamically so as to not have to bind an id to this just for that 
-    let animateDelay = 1500;
+    let animateDelay = 1200;
 
-    //loop thorught because i am lazy and did not want to copy and paste 4 times until we figure out what we are doing here
-    for (let i = 1; i < 5; i++) {
+    //loop through because i am lazy and did not want to copy and paste 4 times until we figure out what we are doing here
+    for (let i = 1; i < 4; i++) {
         //create a div with an h3 of test inside of it just to see if it
         const newTestDiv = createDivs();
         newTestDiv.innerHTML = `<h3>test</h3>`;
         newTestDiv.style = `animation-delay: ${animateDelay}ms`;
         rightBar.prepend(newTestDiv);
 
-        //devreases the animation delay as we are prepending to the right side and we want the top of the menu to load first
+        //degreases the animation delay as we are prepending to the right side and we want the top of the menu to load first
         animateDelay -= 150;
     }
 
+    const newToggleDiv = createDivs();
+    newToggleDiv.style = `animation-delay: ${animateDelay}ms`;
+    newToggleDiv.innerHTML = `<p>Toggle Polyline<br>OFF</p>`;
+    newToggleDiv.addEventListener("click", function () {
+        if (isEnabled === true) {
+            this.innerHTML = `<p>Toggle Polyline<br>ON</p>`;
+            isEnabled = false;
+            createPolyLine();
+        } else {
+            this.innerHTML = `<p>Toggle Polyline<br>OFF</p>`;
+            isEnabled = true;
+            createPolyLine();
+        }
+    })
+    animateDelay -= 150;
+    rightBar.prepend(newToggleDiv);
+
     //create an input field and add it to the top of the right bar 
     const newInputDiv = createDivs();
-    newInputDiv.id = "textBoxField"
+    newInputDiv.id = "textBoxField";
+    newInputDiv.style = `animation-delay: ${animateDelay}ms`;
     newInputDiv.innerHTML = `<input id="toggledField" type="text" value="${city_cords_global.city}" name="inputValue">`;
     rightBar.prepend(newInputDiv);
+
+    animateDelay -= 150;
 
     const newButton = createDivs();
 
@@ -372,13 +394,17 @@ function loadRight() {
             city_cords_global.city = cityInput.value;
             codeAddress();
         } else {
+            createDisplayModal("ERROR: what you entered is not a string!")
             cityInput.value = "Value is not a string!";
         }
     })
+    newButton.style = `animation-delay: ${animateDelay}ms`;
+    animateDelay -= 150;
     rightBar.prepend(newButton);
 
     const secondButton = createDivs();
     secondButton.innerHTML = `<button id="allDataPoints" type="submit" value="All ISS Positions" name="submit">`
+    secondButton.style = `animation-delay: ${animateDelay}ms`;
     rightBar.prepend(secondButton)
     secondButton.addEventListener("click", () => {
 
@@ -420,22 +446,19 @@ function displayRightBarData() {
     }
 }
 
+let pointArr = [];
+
 //this creates the "Console like" elements in the right bar using the data stored in local forage
 function createRightConsoleData() {
     //query local forage for the issArray array
     localforage.getItem("issArray").then(function (results) {
         let issData = results || [];
 
-
-
         //if the array is not empty do things
         if (issData.length !== 0) {
 
-
-
             //check if previous data is displayed
             let previousConsoleData = document.getElementsByClassName("consoleData");
-
 
             //if not then try to make some exist in a reverse for loop counting down from 10
             if (previousConsoleData.length === 0) {
@@ -451,7 +474,32 @@ function createRightConsoleData() {
 
                         //this binds the entire object stringified to the div
                         newDiv.setAttribute("rawData", JSON.stringify(issData[i]));
+                        newDiv.setAttribute("arrId", "null");
+
                         newDiv.innerHTML = `<p style="font-size: 14px">lat: ${issData[i].lat}<br/>lon: ${issData[i].lon}<br/>timeStamp: ${issData[i].time}<br/>distance from ${issData[i].cityData.city}: ${issData[i].distance}</p>`;
+
+                        // this click function is going to grab the data from the right bar and let the user get previous data sets from the ISS
+                        newDiv.addEventListener('click', () => {
+                            let arrID = newDiv.getAttribute("arrId");
+                            let newData = newDiv.getAttribute("rawData");
+                            let clickedData = JSON.parse(newData);
+                            let mapDotRed = mapDot;
+                            mapDotRed.fillColor = "red";
+
+                            if (arrID === "null") {
+                                createOLDMarker(clickedData, mapDotRed, newDiv);
+                            } else {
+                                arrID = parseInt(arrID);
+                                let dataMarker = pointArr[arrID];
+                                if (dataMarker === undefined) {
+                                    createOLDMarker(clickedData, mapDotRed, newDiv);
+                                    return
+                                }
+                                dataMarker.setMap(null);
+                                newDiv.setAttribute("arrId", "null");
+                                pointArr[arrID] = undefined;
+                            }
+                        })
                         rightBar.prepend(newDiv);
                     }
                 }
@@ -472,10 +520,35 @@ function createRightConsoleData() {
 
                         //this binds the entire object stringified to the div
                         newDiv.setAttribute("rawdata", JSON.stringify(issData[i]));
+                        newDiv.setAttribute("arrId", "null");
+
                         newDiv.innerHTML = `<p style="font-size: 14px">lat: ${issData[i].lat}<br/>lon: ${issData[i].lon}<br/>timeStamp: ${issData[i].time}<br/>distance from ${issData[i].cityData.city}: ${issData[i].distance}</p>`;
+
+                        // this click function is going to grab the data from the right bar and let the user get previous data sets from the ISS
+                        newDiv.addEventListener('click', () => {
+                            let arrID = newDiv.getAttribute("arrId");
+                            let newData = newDiv.getAttribute("rawData");
+                            let clickedData = JSON.parse(newData);
+                            let mapDotRed = mapDot;
+                            mapDotRed.fillColor = "red";
+
+                            if (arrID === "null") {
+                                createOLDMarker(clickedData, mapDotRed, newDiv)
+                            } else {
+                                arrID = parseInt(arrID);
+                                let dataMarker = pointArr[arrID];
+                                if (dataMarker === undefined) {
+                                    createOLDMarker(clickedData, mapDotRed, newDiv);
+                                    return
+                                }
+                                dataMarker.setMap(null);
+                                newDiv.setAttribute("arrId", "null");
+                                pointArr[arrID] = undefined;
+                            }
+                        })
                         rightBar.prepend(newDiv);
 
-                        selectData();
+                        ;
 
                     }
                 }
@@ -483,6 +556,19 @@ function createRightConsoleData() {
             }
         }
     })
+}
+
+function createOLDMarker(clickedData, mapDotRed, newDiv) {
+    let dataMarker = new google.maps.Marker({
+        position: new google.maps.LatLng(clickedData.lat, clickedData.lon),
+        map: map,
+        icon: mapDotRed,
+        title: clickedData.time,
+        optimized: false
+    })
+    pointArr.push(dataMarker);
+    let arrayID = pointArr.length - 1;
+    newDiv.setAttribute("arrId", `${arrayID}`);
 }
 
 
@@ -500,7 +586,7 @@ function getWeather() {
             })
             .then(responseJson => {
                 // console.log(responseJson);
-                // grabs the respons and appends the html every 30 seconds with the weather data for that specific location
+                // grabs the response and appends the html every 30 seconds with the weather data for that specific location
                 document.getElementById("currentIssWeatherTemp").innerHTML = responseJson.main.temp + " Degrees F";
                 document.getElementById("currentIssWeatherHum").innerHTML = "Humidity: " + responseJson.main.humidity;
                 document.getElementById("currentIssWeatherRain").innerHTML = responseJson.weather[0].description;
@@ -573,7 +659,7 @@ ShootingStar.prototype.reset = function () {
     this.len = (Math.random() * 80) + 10;
     this.speed = (Math.random() * 10) + 6;
     this.size = (Math.random() * 1) + 0.1;
-    // this is used so the shooting stars arent constant
+    // this is used so the shooting stars aren't constant
     this.waitTime = new Date().getTime() + (Math.random() * 3000) + 500;
     this.active = false;
 }
@@ -628,38 +714,22 @@ function animate() {
     requestAnimationFrame(animate);
 }
 animate();
+console.log()
 
-// this function is going to grab the data from the right bar and let the user get previous data sets from the ISS
-function selectData() {
-    document.querySelectorAll(".consoleData").forEach(item => {
-        item.addEventListener('click', () => {
-
-            let newData = item.getAttribute("rawData");
-            let clickedData = JSON.parse(newData);
-            console.log(clickedData);
-
-            dataMArker = new google.maps.Marker({
-                position: new google.maps.LatLng(clickedData.lat, clickedData.lon),
-                map: map,
-                icon: mapDot,
-                title: clickedData.time,
-                optimized: false
-            })
-        })
-    })
-}
-selectData();
 
 let wooooooo = [];
 
 function last100() {
     localforage.getItem("issArray").then(function (results) {
+        killOldData();
+        let mapDotRed = mapDot;
+        mapDotRed.fillColor = "red";
         for (let i = 0; i < results.length; i++) {
 
             let forageMarker = new google.maps.Marker({
                 position: new google.maps.LatLng(results[i].lat, results[i].lon),
                 map: map,
-                icon: "./assets/images/redDot.png",
+                icon: mapDotRed,
                 title: results[i].time,
                 optimized: false
             })
@@ -671,7 +741,6 @@ function last100() {
 function toggle() {
     for (let i = 0; i < wooooooo.length; i++) {
         wooooooo[i].setMap(null);
-        console.log("clicked");
     }
 }
 
@@ -685,4 +754,14 @@ function createDisplayModal(displayString) {
         }
     })
     modalText.textContent = displayString;
+}
+
+function killOldData() {
+    for (let i = 0; i < pointArr.length; i++) {
+        const element = pointArr[i];
+        if (element !== undefined) {
+            element.setMap(null);
+        }
+    }
+    pointArr = [];
 }
