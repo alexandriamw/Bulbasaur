@@ -17,7 +17,21 @@ window.onclick = function (event) {
         modal.style.display = "none";
     }
 }
+let isPlaying = true;
 
+function playBeep() {
+
+    if (isPlaying) {
+        let beep = document.getElementById("beep");
+        isPlaying = true;
+        setInterval(() => {
+            if (isPlaying) {
+                beep.play();
+            }
+        }, 4500)
+    }
+
+}
 
 
 
@@ -109,6 +123,7 @@ function initMap() {
 
         }, 1000)
         console.log(data);
+        playBeep();
     })
 }
 
@@ -318,7 +333,7 @@ function distanceMath() {
         var dLon = toRad(lon2 - lon1);
         var lat1 = toRad(lat1);
         var lat2 = toRad(lat2);
-        
+
         var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
             Math.sin(dLon / 2) * Math.sin(dLon / 2) * Math.cos(lat1) * Math.cos(lat2);
         var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
@@ -347,7 +362,22 @@ function loadRight() {
     rightBar.innerHTML = "";
 
     //adds the animation delay in dynamically so as to not have to bind an id to this just for that 
-    let animateDelay = 1200;
+    let animateDelay = 1350;
+
+    const newSoundDiv = createDivs();
+    newSoundDiv.style = `animation-delay: ${animateDelay}ms`;
+    newSoundDiv.innerHTML = `<button id="inputButton" type="submit" value="Click Me" name="submit">Toggle Sound</button>`;
+    newSoundDiv.addEventListener("click", function () {
+        if(isPlaying){
+            isPlaying = false;
+        }
+        else{
+            isPlaying = true;
+        }
+    })
+    animateDelay -= 150;
+    rightBar.prepend(newSoundDiv);
+
 
     const newKillDiv = createDivs();
     newKillDiv.style = `animation-delay: ${animateDelay}ms`;
@@ -374,11 +404,11 @@ function loadRight() {
         reColorPolyline();
         let color = "white"
         console.log(polylineColor)
-        if(polylineColor === "#FFFFFF"){
+        if (polylineColor === "#FFFFFF") {
             color = "black";
-        } else if (polylineColor === "#C0C0C0"){
+        } else if (polylineColor === "#C0C0C0") {
             color = "black";
-        } else if (polylineColor === "orange"){
+        } else if (polylineColor === "orange") {
             color = "black";
         }
         createPolyLine();
@@ -410,7 +440,7 @@ function loadRight() {
     newInputDiv.id = "textBoxField";
     newInputDiv.style = `animation-delay: ${animateDelay}ms`;
     newInputDiv.innerHTML = `<input id="toggledField" type="text" value="${city_cords_global.city}" name="inputValue">`;
-    
+
     animateDelay -= 150;
     rightBar.prepend(newInputDiv);
 
@@ -505,7 +535,7 @@ function createRightConsoleData() {
                         //create a div for it add consoleData to the classList so to be identified
                         let newDiv = createDivs()
                         newDiv.classList.add("consoleData");
-                
+
 
                         //set the id of the new div to the longitude coordinate and set the innerHTML to the data
                         newDiv.id = `${issData[i].lon}`;
@@ -541,7 +571,7 @@ function createRightConsoleData() {
                         rightBar.prepend(newDiv);
 
                         // if (shown === false) {
-                            // selectData();
+                        // selectData();
                         //     shown = true;
                         // } else {
                         //     smallToggle();
@@ -782,7 +812,7 @@ function last100() {
             })
             wooooooo.push(forageMarker);
         }
-       
+
     })
 }
 // toggle funtion that removes the dots when called
@@ -793,8 +823,8 @@ function toggle() {
     }
 }
 //not very dry but hey it works and we're pushing lots of code
-function smallToggle(){
-    for(let i = 0; i < moreWooo.length; i++){
+function smallToggle() {
+    for (let i = 0; i < moreWooo.length; i++) {
         moreWooo[i].setMap(null);
     }
 }
@@ -810,7 +840,7 @@ function createDisplayModal(displayString) {
     })
     modalText.textContent = displayString;
 }
-
+// gets rid of old data 
 function killOldData() {
     for (let i = 0; i < pointArr.length; i++) {
         const element = pointArr[i];
@@ -821,9 +851,9 @@ function killOldData() {
     pointArr = [];
 }
 
-
-function reColorPolyline(){
-    if (polylineColor === "red"){
+// polyline color
+function reColorPolyline() {
+    if (polylineColor === "red") {
         polylineColor = "blue";
     } else if (polylineColor === "blue") {
         polylineColor = "green";
@@ -841,39 +871,45 @@ function reColorPolyline(){
 }
 
 
-let randomPositionGen =[];
+let randomPositionGen = [];
 
- function randomPosition(){
-    let randomColor = "#000000".replace(/0/g,function(){return (~~(Math.random()*16)).toString(16);});
+// randomPosition();
+function randomPosition() {
+    let randomColor = "#000000".replace(/0/g, function () {
+        return (~~(Math.random() * 16)).toString(16);
+    });
     let mapDotRed = mapDot;
     mapDotRed.fillColor = randomColor;
+    
 
-     let numLon = (Math.random()*180).toFixed(3);
+    let numLon = (Math.random() * 180).toFixed(3);
     let pOrNeg = Math.floor(Math.random());
     if (pOrNeg == 0) {
         numLon = numLon * -1;
     }
-    
-    let numLat = (Math.random()*90).toFixed(3);
+
+    let numLat = (Math.random() * 90).toFixed(3);
     let posorneg = Math.floor(Math.random());
     if (posorneg == 0) {
         numLat = numLat * -1;
     }
+
     let randomMarker = new google.maps.Marker({
         position: new google.maps.LatLng(numLat, numLon),
         map: map,
         icon: mapDotRed,
-        title: "Your Random Point",
+        title: `${numLat}, ${numLon}`,
         optimized: false
     })
     randomPositionGen.push(randomMarker);
     console.log(numLat);
     console.log(numLon);
 }
-// randomPosition();
 
-function killRandom(){
-    for(let i = 0; i < randomPositionGen.length; i++){
+// gets rid of random position 
+function killRandom() {
+    for (let i = 0; i < randomPositionGen.length; i++) {
         randomPositionGen[i].setMap(null);
     }
 }
+
