@@ -47,6 +47,7 @@ let rightBarDataGlobal = {
 
 //this controls the polyline if true then show polyline if not then don't show it
 let isEnabled = true;
+let polylineColor = "red";
 
 getLastPoints();
 displayRightBarData();
@@ -160,7 +161,7 @@ function createPolyLine() {
         flightPath = new google.maps.Polyline({
             path: flightPlanCoordinates,
             geodesic: true,
-            strokeColor: '#FF0000',
+            strokeColor: polylineColor,
             strokeOpacity: 1.0,
             strokeWeight: 2
         });
@@ -170,7 +171,7 @@ function createPolyLine() {
         flightPath = new google.maps.Polyline({
             path: flightPlanCoordinates,
             geodesic: true,
-            strokeColor: '#FF0000',
+            strokeColor: polylineColor,
             strokeOpacity: 1.0,
             strokeWeight: 2
         });
@@ -347,19 +348,47 @@ function loadRight() {
 
     //adds the animation delay in dynamically so as to not have to bind an id to this just for that 
     let animateDelay = 1200;
+    
 
-    //loop through because i am lazy and did not want to copy and paste 4 times until we figure out what we are doing here
-    for (let i = 1; i < 4; i++) {
-        //create a div with an h3 of test inside of it just to see if it
-        const newTestDiv = createDivs();
-        newTestDiv.innerHTML = `<button id="inputButton" type="submit" value="Click Me" name="submit">`;
+    const newMarkerDiv = createDivs();
+    newMarkerDiv.style = `animation-delay: ${animateDelay}ms`;
+    newMarkerDiv.innerHTML = `<button id="inputButton" type="submit" value="Click Me" name="submit">Create Random Marker</button>`;
+    newMarkerDiv.addEventListener("click", function () {
+        randomPosition()
+    })
+    animateDelay -= 150;
+    rightBar.prepend(newMarkerDiv);
 
-        newTestDiv.style = `animation-delay: ${animateDelay}ms`;
-        rightBar.prepend(newTestDiv);
+    const newKillDiv = createDivs();
+    newKillDiv.style = `animation-delay: ${animateDelay}ms`;
+    newKillDiv.innerHTML = `<button id="inputButton" type="submit" value="Click Me" name="submit">delete Random Marker's</button>`;
+    newKillDiv.addEventListener("click", function () {
+        killRandom()
+    })
+    animateDelay -= 150;
+    rightBar.prepend(newKillDiv);
 
-        //degreases the animation delay as we are prepending to the right side and we want the top of the menu to load first
-        animateDelay -= 150;
-    }
+
+    const newPolyColorDiv = createDivs();
+    newPolyColorDiv.style = `animation-delay: ${animateDelay}ms`;
+    newPolyColorDiv.innerHTML = `<button id="inputButton" type="submit" value="Click Me" name="submit" style="background: ${polylineColor}">Toggle Polyline Color</button>`;
+    newPolyColorDiv.addEventListener("click", function () {
+        reColorPolyline();
+        let color = "white"
+        console.log(polylineColor)
+        if(polylineColor === "#FFFFFF"){
+            color = "black";
+        } else if (polylineColor === "#C0C0C0"){
+            color = "black";
+        } else if (polylineColor === "orange"){
+            color = "black";
+        }
+        createPolyLine();
+        this.innerHTML = `<button id="inputButton" type="submit" value="Click Me" name="submit" style="background: ${polylineColor}; color: ${color}">Toggle Polyline Color</button>`;
+    })
+    animateDelay -= 150;
+    rightBar.prepend(newPolyColorDiv);
+
 
     const newToggleDiv = createDivs();
     newToggleDiv.style = `animation-delay: ${animateDelay}ms`;
@@ -741,6 +770,7 @@ let wooooooo = [];
 function last100() {
     localforage.getItem("issArray").then(function (results) {
         killOldData();
+        killRandom();
         let mapDotRed = mapDot;
         mapDotRed.fillColor = "red";
         for (let i = 0; i < results.length; i++) {
@@ -792,11 +822,34 @@ function killOldData() {
     }
     pointArr = [];
 }
+
+
+function reColorPolyline(){
+    if (polylineColor === "red"){
+        polylineColor = "blue";
+    } else if (polylineColor === "blue") {
+        polylineColor = "green";
+    } else if (polylineColor === "green") {
+        polylineColor = "black";
+    } else if (polylineColor === "black") {
+        polylineColor = "orange";
+    } else if (polylineColor === "orange") {
+        polylineColor = "#FFFFFF";
+    } else if (polylineColor === "#FFFFFF") {
+        polylineColor = "#C0C0C0";
+    } else if (polylineColor === "#C0C0C0") {
+        polylineColor = "red";
+    }
+}
+
+
 let randomPositionGen =[];
 
-function randomPosition(){
+ function randomPosition(){
+    let mapDotRed = mapDot;
+    mapDotRed.fillColor = "red";
 
-    let numLon = (Math.random()*180).toFixed(3);
+     let numLon = (Math.random()*180).toFixed(3);
     let pOrNeg = Math.floor(Math.random());
     if (pOrNeg == 0) {
         numLon = numLon * -1;

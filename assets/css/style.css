@@ -20,8 +20,8 @@
 }
 #inputButton{
   background-color: #1A306D;
-  width: 250px;
-  height: 55px;
+  width: 95%;
+  padding: 5px;
   color: white;
   font-family: Arial, Helvetica, sans-serif;
   font-weight: bold;
@@ -35,8 +35,8 @@
 }
 #allDataPoints{
   background-color: #e82c29;
-  width: 250px;
-  height: 55px;
+  width: 95%;
+  padding: 5px;
   color: white;
   font-family: Arial, Helvetica, sans-serif;
   font-weight: bold;
