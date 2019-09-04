@@ -5,7 +5,7 @@ const googleMapsAPI = "https://maps.googleapis.com/maps/api/js?key=AIzaSyAvh-RJE
 
 const modal = document.getElementById("myModal");
 const span = document.getElementsByClassName("close")[0];
-
+// main onLoad function that greets the user
 window.onload = function () {
     modal.style.display = "block";
 }
@@ -44,12 +44,17 @@ let rightBarDataGlobal = {
     timerInterval: null,
     isRunning: false
 }
+<<<<<<< HEAD
+// global calls ot render on load
+=======
 
 //this controls the polyline if true then show polyline if not then don't show it
 let isEnabled = true;
 
+>>>>>>> master
 getLastPoints();
 displayRightBarData();
+
 
 let geocoder;
 
@@ -138,7 +143,7 @@ function codeAddress() {
 }
 
 let flightPath;
-
+// creates a polyline between two points. gg Coop
 function createPolyLine() {
     var flightPlanCoordinates = [{
             lat: city_cords_global.lat,
@@ -316,7 +321,7 @@ function distanceMath() {
         var dLon = toRad(lon2 - lon1);
         var lat1 = toRad(lat1);
         var lat2 = toRad(lat2);
-
+        
         var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
             Math.sin(dLon / 2) * Math.sin(dLon / 2) * Math.cos(lat1) * Math.cos(lat2);
         var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
@@ -351,7 +356,8 @@ function loadRight() {
     for (let i = 1; i < 4; i++) {
         //create a div with an h3 of test inside of it just to see if it
         const newTestDiv = createDivs();
-        newTestDiv.innerHTML = `<h3>test</h3>`;
+        newTestDiv.innerHTML = `<button id="inputButton" type="submit" value="Click Me" name="submit">`;
+
         newTestDiv.style = `animation-delay: ${animateDelay}ms`;
         rightBar.prepend(newTestDiv);
 
@@ -378,16 +384,28 @@ function loadRight() {
 
     //create an input field and add it to the top of the right bar 
     const newInputDiv = createDivs();
+<<<<<<< HEAD
+    newInputDiv.id = "textBoxField"
+
+=======
     newInputDiv.id = "textBoxField";
     newInputDiv.style = `animation-delay: ${animateDelay}ms`;
+>>>>>>> master
     newInputDiv.innerHTML = `<input id="toggledField" type="text" value="${city_cords_global.city}" name="inputValue">`;
+    newInputDiv.style = `animation-delay: ${animateDelay}ms`;
+    
+    animateDelay -= 150;
     rightBar.prepend(newInputDiv);
 
     animateDelay -= 150;
 
     const newButton = createDivs();
+    // button that is used as input for new city data point
+    newButton.innerHTML = `<button id="inputButton" type="submit" value="Click Me" name="submit">ENTER NEW CITY</button>`;
 
-    newButton.innerHTML = `<button id="inputButton" type="submit" value="Click Me" name="submit">`
+    newButton.style = `animation-delay: ${animateDelay}ms`;
+    animateDelay -= 150;
+
     newButton.addEventListener("click", function () {
         const cityInput = document.getElementById("toggledField");
         if (typeof cityInput.value === "string") {
@@ -401,10 +419,18 @@ function loadRight() {
     newButton.style = `animation-delay: ${animateDelay}ms`;
     animateDelay -= 150;
     rightBar.prepend(newButton);
-
+    // creates button that allows to toggle the display all funtion of data points
     const secondButton = createDivs();
+<<<<<<< HEAD
+
+    secondButton.innerHTML = `<button id="allDataPoints" type="submit" value="All ISS Positions" name="ALL DATA POINTS">ALL ISS DATA POINTS</button>`
+    secondButton.style = `animation-delay: ${animateDelay}ms`;
+    animateDelay -= 150;
+
+=======
     secondButton.innerHTML = `<button id="allDataPoints" type="submit" value="All ISS Positions" name="submit">`
     secondButton.style = `animation-delay: ${animateDelay}ms`;
+>>>>>>> master
     rightBar.prepend(secondButton)
     secondButton.addEventListener("click", () => {
 
@@ -436,7 +462,7 @@ function displayRightBarData() {
 
         setTimeout(createRightConsoleData, 1000)
 
-        //set is running var to true so we can identify if the interval is running or not
+        //set is running let to true so we can identify if the interval is running or not
         rightBarDataGlobal.isRunning = true;
     } else {
         //clear the interval so to not mess wit the menu when open
@@ -460,6 +486,10 @@ function createRightConsoleData() {
             //check if previous data is displayed
             let previousConsoleData = document.getElementsByClassName("consoleData");
 
+<<<<<<< HEAD
+            selectData();
+=======
+>>>>>>> master
             //if not then try to make some exist in a reverse for loop counting down from 10
             if (previousConsoleData.length === 0) {
                 for (let i = 10; i >= 0; i--) {
@@ -468,6 +498,7 @@ function createRightConsoleData() {
                         //create a div for it add consoleData to the classList so to be identified
                         let newDiv = createDivs()
                         newDiv.classList.add("consoleData");
+                
 
                         //set the id of the new div to the longitude coordinate and set the innerHTML to the data
                         newDiv.id = `${issData[i].lon}`;
@@ -501,6 +532,14 @@ function createRightConsoleData() {
                             }
                         })
                         rightBar.prepend(newDiv);
+
+                        // if (shown === false) {
+                            // selectData();
+                        //     shown = true;
+                        // } else {
+                        //     smallToggle();
+                        //     shown = false;
+                        // }
                     }
                 }
             } else {
@@ -716,9 +755,42 @@ function animate() {
 animate();
 console.log()
 
+<<<<<<< HEAD
+let moreWooo = [];
+// this function is going to grab the data from the right bar and let the user get previous data sets from the ISS
+function selectData() {
+    document.querySelectorAll(".consoleData").forEach(item => {
+        item.addEventListener('click', () => {
+            
+            if(shown === false){
+                let newData = item.getAttribute("rawData");
+                let clickedData = JSON.parse(newData);
+    
+                dataMArker = new google.maps.Marker({
+                    position: new google.maps.LatLng(clickedData.lat, clickedData.lon),
+                    map: map,
+                    icon: mapDot,
+                    title: clickedData.time,
+                    optimized: false
+                })
+                  shown = true;
+            }
+            else{
 
+                smallToggle();
+                shown = false;
+            }
+            moreWooo.push(dataMArker); 
+        })
+    })
+}
+// I know this is a shitty way to do this but im tired and this worked the first time
+=======
+
+>>>>>>> master
 let wooooooo = [];
 
+// pulls from localForage all the saved data points and maps them accros the map with time stamp. 
 function last100() {
     localforage.getItem("issArray").then(function (results) {
         killOldData();
@@ -735,15 +807,23 @@ function last100() {
             })
             wooooooo.push(forageMarker);
         }
+       
     })
 }
+// toggle funtion that removes the dots when called
 
 function toggle() {
     for (let i = 0; i < wooooooo.length; i++) {
         wooooooo[i].setMap(null);
     }
 }
-
+//not very dry but hey it works and we're pushing lots of code
+function smallToggle(){
+    for(let i = 0; i < moreWooo.length; i++){
+        moreWooo[i].setMap(null);
+    }
+}
+// creates a popup if an error is thrown at us with user input
 function createDisplayModal(displayString) {
     let modal = document.getElementById("myErrModal");
     let modalText = document.getElementById("modal-text");
@@ -756,6 +836,8 @@ function createDisplayModal(displayString) {
     modalText.textContent = displayString;
 }
 
+<<<<<<< HEAD
+=======
 function killOldData() {
     for (let i = 0; i < pointArr.length; i++) {
         const element = pointArr[i];
@@ -765,3 +847,4 @@ function killOldData() {
     }
     pointArr = [];
 }
+>>>>>>> master
