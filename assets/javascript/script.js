@@ -792,3 +792,36 @@ function killOldData() {
     }
     pointArr = [];
 }
+let randomPositionGen =[];
+
+function randomPosition(){
+
+    let numLon = (Math.random()*180).toFixed(3);
+    let pOrNeg = Math.floor(Math.random());
+    if (pOrNeg == 0) {
+        numLon = numLon * -1;
+    }
+    
+    let numLat = (Math.random()*90).toFixed(3);
+    let posorneg = Math.floor(Math.random());
+    if (posorneg == 0) {
+        numLat = numLat * -1;
+    }
+    let randomMarker = new google.maps.Marker({
+        position: new google.maps.LatLng(numLat, numLon),
+        map: map,
+        icon: mapDotRed,
+        title: "Your Random Point",
+        optimized: false
+    })
+    randomPositionGen.push(randomMarker);
+    console.log(numLat);
+    console.log(numLon);
+}
+// randomPosition();
+
+function killRandom(){
+    for(let i = 0; i < randomPositionGen.length; i++){
+        randomPositionGen[i].setMap(null);
+    }
+}
