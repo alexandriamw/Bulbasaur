@@ -454,12 +454,17 @@ function loadRight() {
 
     newButton.addEventListener("click", function () {
         const cityInput = document.getElementById("toggledField");
-        if (typeof cityInput.value === "string") {
+        if (typeof cityInput.value === "string" && cityInput.value !== "") {
             city_cords_global.city = cityInput.value;
             codeAddress();
         } else {
-            createDisplayModal("ERROR: what you entered is not a string!")
-            cityInput.value = "Value is not a string!";
+            if(cityInput.value === ""){
+                createDisplayModal("ERROR: nothing entered, please enter something and try again")
+                cityInput.value = "nothing entered!";
+            } else {
+                createDisplayModal("ERROR: what you entered is not a string!")
+                cityInput.value = "Value is not a string!";
+            }
         }
     })
     newButton.style = `animation-delay: ${animateDelay}ms`;
