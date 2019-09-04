@@ -44,14 +44,10 @@ let rightBarDataGlobal = {
     timerInterval: null,
     isRunning: false
 }
-<<<<<<< HEAD
-// global calls ot render on load
-=======
 
 //this controls the polyline if true then show polyline if not then don't show it
 let isEnabled = true;
 
->>>>>>> master
 getLastPoints();
 displayRightBarData();
 
@@ -367,14 +363,14 @@ function loadRight() {
 
     const newToggleDiv = createDivs();
     newToggleDiv.style = `animation-delay: ${animateDelay}ms`;
-    newToggleDiv.innerHTML = `<p>Toggle Polyline<br>OFF</p>`;
+    newToggleDiv.innerHTML = `<button id="inputButton" type="submit" value="Click Me" name="submit">Toggle Polyline: OFF</button>`;
     newToggleDiv.addEventListener("click", function () {
         if (isEnabled === true) {
-            this.innerHTML = `<p>Toggle Polyline<br>ON</p>`;
+            this.innerHTML = `<button id="inputButton" type="submit" value="Click Me" name="submit">Toggle Polyline: ON</button>`;
             isEnabled = false;
             createPolyLine();
         } else {
-            this.innerHTML = `<p>Toggle Polyline<br>OFF</p>`;
+            this.innerHTML = `<button id="inputButton" type="submit" value="Click Me" name="submit">Toggle Polyline: OFF</button>`;
             isEnabled = true;
             createPolyLine();
         }
@@ -384,20 +380,13 @@ function loadRight() {
 
     //create an input field and add it to the top of the right bar 
     const newInputDiv = createDivs();
-<<<<<<< HEAD
-    newInputDiv.id = "textBoxField"
-
-=======
     newInputDiv.id = "textBoxField";
     newInputDiv.style = `animation-delay: ${animateDelay}ms`;
->>>>>>> master
     newInputDiv.innerHTML = `<input id="toggledField" type="text" value="${city_cords_global.city}" name="inputValue">`;
-    newInputDiv.style = `animation-delay: ${animateDelay}ms`;
     
     animateDelay -= 150;
     rightBar.prepend(newInputDiv);
 
-    animateDelay -= 150;
 
     const newButton = createDivs();
     // button that is used as input for new city data point
@@ -421,16 +410,11 @@ function loadRight() {
     rightBar.prepend(newButton);
     // creates button that allows to toggle the display all funtion of data points
     const secondButton = createDivs();
-<<<<<<< HEAD
 
     secondButton.innerHTML = `<button id="allDataPoints" type="submit" value="All ISS Positions" name="ALL DATA POINTS">ALL ISS DATA POINTS</button>`
     secondButton.style = `animation-delay: ${animateDelay}ms`;
     animateDelay -= 150;
 
-=======
-    secondButton.innerHTML = `<button id="allDataPoints" type="submit" value="All ISS Positions" name="submit">`
-    secondButton.style = `animation-delay: ${animateDelay}ms`;
->>>>>>> master
     rightBar.prepend(secondButton)
     secondButton.addEventListener("click", () => {
 
@@ -486,10 +470,6 @@ function createRightConsoleData() {
             //check if previous data is displayed
             let previousConsoleData = document.getElementsByClassName("consoleData");
 
-<<<<<<< HEAD
-            selectData();
-=======
->>>>>>> master
             //if not then try to make some exist in a reverse for loop counting down from 10
             if (previousConsoleData.length === 0) {
                 for (let i = 10; i >= 0; i--) {
@@ -755,39 +735,6 @@ function animate() {
 animate();
 console.log()
 
-<<<<<<< HEAD
-let moreWooo = [];
-// this function is going to grab the data from the right bar and let the user get previous data sets from the ISS
-function selectData() {
-    document.querySelectorAll(".consoleData").forEach(item => {
-        item.addEventListener('click', () => {
-            
-            if(shown === false){
-                let newData = item.getAttribute("rawData");
-                let clickedData = JSON.parse(newData);
-    
-                dataMArker = new google.maps.Marker({
-                    position: new google.maps.LatLng(clickedData.lat, clickedData.lon),
-                    map: map,
-                    icon: mapDot,
-                    title: clickedData.time,
-                    optimized: false
-                })
-                  shown = true;
-            }
-            else{
-
-                smallToggle();
-                shown = false;
-            }
-            moreWooo.push(dataMArker); 
-        })
-    })
-}
-// I know this is a shitty way to do this but im tired and this worked the first time
-=======
-
->>>>>>> master
 let wooooooo = [];
 
 // pulls from localForage all the saved data points and maps them accros the map with time stamp. 
@@ -836,8 +783,6 @@ function createDisplayModal(displayString) {
     modalText.textContent = displayString;
 }
 
-<<<<<<< HEAD
-=======
 function killOldData() {
     for (let i = 0; i < pointArr.length; i++) {
         const element = pointArr[i];
@@ -847,4 +792,3 @@ function killOldData() {
     }
     pointArr = [];
 }
->>>>>>> master
