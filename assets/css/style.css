@@ -9,62 +9,55 @@
 
 #toggledField {
   width: 250px;
+  text-align: center;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-weight: bold;
+  border: #12224F 1px solid;
+  border-radius: 3px;
 }
-
-#test1 {
-  animation-delay: 250ms;
-}
-
-#test2 {
-  animation-delay: 500ms;
-}
-
-#test3 {
-  animation-delay: 750ms;
-}
-
-#test4 {
-  animation-delay: 1000ms;
-}
-
 .consoleData {
   background: #3D3C3B;
 }
 #inputButton{
   background-color: #1A306D;
-  width: 55px;
+  width: 250px;
   height: 55px;
-  color: #000;
+  color: white;
   font-family: Arial, Helvetica, sans-serif;
   font-weight: bold;
   text-align: center;
-  border-radius: 100%;
+  border-radius: 5px;
+}
+#inputButton:hover {
+  background-color: rgb(94, 122, 199);
+  color: rgb(241, 243, 245);
+  transition-duration: 750ms;
 }
 #allDataPoints{
   background-color: #e82c29;
-  width: 55px;
+  width: 250px;
   height: 55px;
-  color: #000;
+  color: white;
   font-family: Arial, Helvetica, sans-serif;
   font-weight: bold;
   text-align: center;
-  border-radius: 100%;
+  border-radius: 5px;
+}
+#allDataPoints:hover {
+  background-color:#f59b99;
+  color: rgb(241, 243, 245);
+  transition-duration: 750ms;
 }
 .testFields {
   text-align: center;
   font-weight: bold;
-  border: rgb(145, 142, 142) 1px solid;
   border-radius: 5px;
   font-size: 20px;
   margin-top: 4%;
   padding-top: 10px;
 }
 
-.testFields:hover {
-  background-color: rgb(94, 122, 199);
-  color: rgb(241, 243, 245);
-  transition-duration: 750ms;
-}
+
 
 .leftH2 {
   font-weight: bolder;

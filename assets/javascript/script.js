@@ -48,6 +48,7 @@ let rightBarDataGlobal = {
 getLastPoints();
 displayRightBarData();
 
+
 let geocoder;
 
 let mapDot1 = {
@@ -349,7 +350,8 @@ function loadRight() {
     for (let i = 1; i < 5; i++) {
         //create a div with an h3 of test inside of it just to see if it
         const newTestDiv = createDivs();
-        newTestDiv.innerHTML = `<h3>test</h3>`;
+        newTestDiv.innerHTML = `<button id="inputButton" type="submit" value="Click Me" name="submit">`;
+
         newTestDiv.style = `animation-delay: ${animateDelay}ms`;
         rightBar.prepend(newTestDiv);
 
@@ -360,12 +362,20 @@ function loadRight() {
     //create an input field and add it to the top of the right bar 
     const newInputDiv = createDivs();
     newInputDiv.id = "textBoxField"
+
     newInputDiv.innerHTML = `<input id="toggledField" type="text" value="${city_cords_global.city}" name="inputValue">`;
+    newInputDiv.style = `animation-delay: ${animateDelay}ms`;
+    
+    animateDelay -= 150;
     rightBar.prepend(newInputDiv);
 
     const newButton = createDivs();
     // button that is used as input for new city data point
-    newButton.innerHTML = `<button id="inputButton" type="submit" value="Click Me" name="submit">`
+    newButton.innerHTML = `<button id="inputButton" type="submit" value="Click Me" name="submit">ENTER NEW CITY</button>`;
+
+    newButton.style = `animation-delay: ${animateDelay}ms`;
+    animateDelay -= 150;
+
     newButton.addEventListener("click", function () {
         const cityInput = document.getElementById("toggledField");
         if (typeof cityInput.value === "string") {
@@ -378,7 +388,11 @@ function loadRight() {
     rightBar.prepend(newButton);
     // creates button that allows to toggle the display all funtion of data points
     const secondButton = createDivs();
-    secondButton.innerHTML = `<button id="allDataPoints" type="submit" value="All ISS Positions" name="ALL DATA POINTS">`
+
+    secondButton.innerHTML = `<button id="allDataPoints" type="submit" value="All ISS Positions" name="ALL DATA POINTS">ALL ISS DATA POINTS</button>`
+    secondButton.style = `animation-delay: ${animateDelay}ms`;
+    animateDelay -= 150;
+
     rightBar.prepend(secondButton)
     secondButton.addEventListener("click", () => {
 
@@ -410,7 +424,7 @@ function displayRightBarData() {
 
         setTimeout(createRightConsoleData, 1000)
 
-        //set is running var to true so we can identify if the interval is running or not
+        //set is running let to true so we can identify if the interval is running or not
         rightBarDataGlobal.isRunning = true;
     } else {
         //clear the interval so to not mess wit the menu when open
@@ -436,7 +450,7 @@ function createRightConsoleData() {
             //check if previous data is displayed
             let previousConsoleData = document.getElementsByClassName("consoleData");
 
-
+            selectData();
             //if not then try to make some exist in a reverse for loop counting down from 10
             if (previousConsoleData.length === 0) {
                 for (let i = 10; i >= 0; i--) {
@@ -445,6 +459,7 @@ function createRightConsoleData() {
                         //create a div for it add consoleData to the classList so to be identified
                         let newDiv = createDivs()
                         newDiv.classList.add("consoleData");
+                
 
                         //set the id of the new div to the longitude coordinate and set the innerHTML to the data
                         newDiv.id = `${issData[i].lon}`;
@@ -455,7 +470,7 @@ function createRightConsoleData() {
                         rightBar.prepend(newDiv);
 
                         // if (shown === false) {
-                        //     selectData();
+                            // selectData();
                         //     shown = true;
                         // } else {
                         //     smallToggle();
