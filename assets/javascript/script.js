@@ -854,8 +854,8 @@ let randomPositionGen =[];
     if (pOrNeg == 0) {
         numLon = numLon * -1;
     }
-
-     let numLat = (Math.random()*90).toFixed(3);
+    
+    let numLat = (Math.random()*90).toFixed(3);
     let posorneg = Math.floor(Math.random());
     if (posorneg == 0) {
         numLat = numLat * -1;
@@ -872,7 +872,8 @@ let randomPositionGen =[];
     console.log(numLon);
 }
 // randomPosition();
- function killRandom(){
+
+function killRandom(){
     for(let i = 0; i < randomPositionGen.length; i++){
         randomPositionGen[i].setMap(null);
     }
