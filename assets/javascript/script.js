@@ -50,13 +50,15 @@ displayRightBarData();
 
 let geocoder;
 
-//converted the map dot to an svg so we can change the color on the fly
-let mapDot = {
+let mapDot1 = {
     path: 'M25 125 c-14 -13 -25 -36 -25 -50 0 -33 42 -75 75 -75 33 0 75 42 75 75 0 14 -11 37 -25 50 -13 14 -36 25 -50 25 -14 0 -37 -11 -50 -25z',
     fillColor: 'red',
     fillOpacity: 1,
     scale: 0.1
 };
+
+//converted the map dot to an svg so we can change the color on the fly
+let mapDot;
 
 
 // our main map function
@@ -71,6 +73,13 @@ function initMap() {
             zoom: 5,
             mapTypeId: google.maps.MapTypeId.SATELLITE
         });
+        mapDot = {
+            path: 'M25 125 c-14 -13 -25 -36 -25 -50 0 -33 42 -75 75 -75 33 0 75 42 75 75 0 14 -11 37 -25 50 -13 14 -36 25 -50 25 -14 0 -37 -11 -50 -25z',
+            fillColor: 'red',
+            fillOpacity: 1,
+            scale: 0.1,
+            anchor: new google.maps.Point(77, 77)
+        };
         geocoder = new google.maps.Geocoder();
         codeAddress();
 
@@ -94,6 +103,7 @@ function initMap() {
                     issMarker.setPosition(pos);
                     document.getElementById("issLocationLat").innerHTML = data.lat;
                     document.getElementById("issLocationLon").innerHTML = data.lon;
+                    createPolyLine();
                 },
                 function () {
                     handleLocationError(true, issMarker, map.getCenter());
@@ -151,8 +161,17 @@ function createPolyLine() {
             strokeOpacity: 1.0,
             strokeWeight: 2
         });
+        flightPath.setMap(map);
     } else {
-        flightPath.path = flightPlanCoordinates
+        flightPath.setMap(null);
+        flightPath = new google.maps.Polyline({
+            path: flightPlanCoordinates,
+            geodesic: true,
+            strokeColor: '#FF0000',
+            strokeOpacity: 1.0,
+            strokeWeight: 2
+        });
+        flightPath.setMap(map);
     }
 }
 
@@ -434,6 +453,14 @@ function createRightConsoleData() {
                         newDiv.setAttribute("rawData", JSON.stringify(issData[i]));
                         newDiv.innerHTML = `<p style="font-size: 14px">lat: ${issData[i].lat}<br/>lon: ${issData[i].lon}<br/>timeStamp: ${issData[i].time}<br/>distance from ${issData[i].cityData.city}: ${issData[i].distance}</p>`;
                         rightBar.prepend(newDiv);
+
+                        // if (shown === false) {
+                        //     selectData();
+                        //     shown = true;
+                        // } else {
+                        //     smallToggle();
+                        //     shown = false;
+                        // }
                     }
                 }
             } else {
@@ -615,22 +642,29 @@ let moreWooo = [];
 function selectData() {
     document.querySelectorAll(".consoleData").forEach(item => {
         item.addEventListener('click', () => {
+            
+            if(shown === false){
+                let newData = item.getAttribute("rawData");
+                let clickedData = JSON.parse(newData);
+    
+                dataMArker = new google.maps.Marker({
+                    position: new google.maps.LatLng(clickedData.lat, clickedData.lon),
+                    map: map,
+                    icon: mapDot,
+                    title: clickedData.time,
+                    optimized: false
+                })
+                  shown = true;
+            }
+            else{
 
-            let newData = item.getAttribute("rawData");
-            let clickedData = JSON.parse(newData);
-
-            dataMArker = new google.maps.Marker({
-                position: new google.maps.LatLng(clickedData.lat, clickedData.lon),
-                map: map,
-                icon: mapDot,
-                title: clickedData.time,
-                optimized: false
-            })
-            moreWooo.push(dataMArker);
+                smallToggle();
+                shown = false;
+            }
+            moreWooo.push(dataMArker); 
         })
     })
 }
-selectData();
 // I know this is a shitty way to do this but im tired and this worked the first time
 let wooooooo = [];
 
@@ -648,9 +682,11 @@ function last100() {
             })
             wooooooo.push(forageMarker);
         }
+       
     })
 }
 // toggle funtion that removes the dots when called
+
 function toggle() {
     for (let i = 0; i < wooooooo.length; i++) {
         wooooooo[i].setMap(null);
